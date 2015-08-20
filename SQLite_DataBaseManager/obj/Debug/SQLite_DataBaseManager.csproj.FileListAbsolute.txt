@@ -21,3 +21,5 @@ C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLit
 C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.CreateViewForm.resources
 C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.CreateTableForm.resources
 C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.CreateIndexForm.resources
+C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.CreateTriggerForm.resources
+C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.EditTableForm.resources

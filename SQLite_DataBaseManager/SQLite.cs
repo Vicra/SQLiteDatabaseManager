@@ -19,11 +19,13 @@ namespace SQLite_DataBaseManager
         {
             dbConnection = new SQLiteConnection("Data Source=" + name + ".sqlite;Version=3;Password  = " + password);
             dbConnection.Open();
+            
         }
         public void ConnectDatabase(string name)
         {
             dbConnection = new SQLiteConnection("Data Source=" + name + ".sqlite;Version=3;");
             dbConnection.Open();
+            
         }
         public void CloseConnection()
         {
@@ -75,24 +77,34 @@ namespace SQLite_DataBaseManager
         {
             SQLiteCommand command = new SQLiteCommand(sql, this.dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
-            return reader.GetSchemaTable();
-            //verificar la funcion getschema table
+            DataTable dt= new DataTable();
+            dt.Load(reader);
+            return dt;
         }
+       
         public DataTable GetTables()
         {
             return ExecuteWithResults("select name from sqlite_master where type = 'table';");
         }
-        public DataTable GetIndexes()
+        public DataTable GetIndexes(string table)
         {
-            return ExecuteWithResults("select name from sqlite_master where type = 'index';");
+            DataTable dt = new DataTable();
+            dt= ExecuteWithResults("select name from sqlite_master where type = 'index' AND tbl_name = '"+table+"';");
+            return dt;
         }
         public DataTable GetTriggers()
         {
             return ExecuteWithResults("select name from sqlite_master where type = 'trigger';");
         }
+        public DataTable GetViews()
+        {
+            return ExecuteWithResults("select name from sqlite_master where type = 'view';");
+        }
         public DataTable GetTableColumns(string nombreTabla)
         {
-            return ExecuteWithResults("pragma  table_info(" + nombreTabla + ");");
+            DataTable dt = new DataTable();
+            dt = ExecuteWithResults("pragma  table_info(" + nombreTabla + ");");
+            return dt;
         }
 
         public void addData(){
@@ -103,7 +115,7 @@ namespace SQLite_DataBaseManager
 
             try
             {
-                string sql = "select * from tabla1;";
+                string sql = "pragma table_info(tabla1);";
                 SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
                 SQLiteDataReader reader = command.ExecuteReader();
                 while (reader.Read())

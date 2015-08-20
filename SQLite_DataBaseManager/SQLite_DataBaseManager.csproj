@@ -85,11 +85,23 @@
     <Compile Include="CreateTableForm.Designer.cs">
       <DependentUpon>CreateTableForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreateTriggerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateTriggerForm.Designer.cs">
+      <DependentUpon>CreateTriggerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CreateViewForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CreateViewForm.Designer.cs">
       <DependentUpon>CreateViewForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditTableForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditTableForm.Designer.cs">
+      <DependentUpon>EditTableForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -118,8 +130,14 @@
     <EmbeddedResource Include="CreateTableForm.resx">
       <DependentUpon>CreateTableForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CreateTriggerForm.resx">
+      <DependentUpon>CreateTriggerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreateViewForm.resx">
       <DependentUpon>CreateViewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditTableForm.resx">
+      <DependentUpon>EditTableForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
