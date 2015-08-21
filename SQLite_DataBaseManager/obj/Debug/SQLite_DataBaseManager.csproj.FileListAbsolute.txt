@@ -17,7 +17,6 @@ c:\users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLit
 c:\users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLite_DataBaseManager\bin\Debug\System.Data.SQLite.xml
 C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.CreateDatabaseForm.resources
 C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.ConnectDatabaseForm.resources
-C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.SQLEditorForm.resources
 C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.CreateViewForm.resources
 C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.CreateTableForm.resources
 C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.CreateIndexForm.resources

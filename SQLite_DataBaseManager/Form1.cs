@@ -18,7 +18,6 @@ namespace SQLite_DataBaseManager
         CreateViewForm viewForm;
         CreateDatabaseForm createForm;
         CreateTableForm createTableForm;
-        SQLEditorForm editorForm;
         CreateIndexForm indexform;
         EditTableForm editTableform;
         CreateTriggerForm triggerForm;
@@ -106,16 +105,24 @@ namespace SQLite_DataBaseManager
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes.Add("Triggers", "Triggers",10,10);
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes["Triggers"].ContextMenuStrip = TriggerMenuStrip;
 
-                //LoadColumns(DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].ToString());
+
+                string tableName = DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Text; 
+                LoadColumns(tableName);
                 LoadIndexes(dt.Rows[i].ItemArray[0].ToString());
-                //LoadTriggers();
+                LoadTriggers(tableName);
             }
                 
         }
 
-        private void LoadTriggers()
+        private void LoadTriggers(string table)
         {
-            throw new NotImplementedException();
+            DataTable dt = db.GetTriggers(table);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[table].Nodes["Indexes"].Nodes.Add(dt.Rows[i].ItemArray[0].ToString(),
+                    dt.Rows[i].ItemArray[0].ToString(), 5, 5);
+                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[table].Nodes["Indexes"].Nodes[i].ContextMenuStrip = IndexMenuStrip;
+            }
         }
 
         private void LoadIndexes(string table)
@@ -134,8 +141,8 @@ namespace SQLite_DataBaseManager
             DataTable dt = db.GetTableColumns(table);
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[table].Nodes["Triggers"].Nodes.Add(dt.Rows[i].ItemArray[0].ToString(),
-                    dt.Rows[i].ItemArray[0].ToString(),5, 5);
+                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[table].Nodes["Columns"].Nodes.Add(dt.Rows[i].ItemArray[1].ToString(),
+                    dt.Rows[i].ItemArray[1].ToString(),5, 5);
             }
         }
         private void LoadViews()
@@ -179,8 +186,6 @@ namespace SQLite_DataBaseManager
 
         private void openSDLEditorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            editorForm = new SQLEditorForm(db);
-            editorForm.Show();
         }
 
         private void disconnectToDatabaseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -243,6 +248,7 @@ namespace SQLite_DataBaseManager
                 {
                     DataTable dt = new DataTable();
                     this.dataGridView1.DataSource = db.ExecuteWithResults(sql);
+                    tabControl1.SelectedIndex = 0;
                     string message= "sql Excecuted successfully";
                     AppendText(message, Color.Blue);
                 }
@@ -340,7 +346,7 @@ namespace SQLite_DataBaseManager
 
         private void createTriggerToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            triggerForm = new CreateTriggerForm(db);
+            triggerForm = new CreateTriggerForm(db,DatabaseTree.SelectedNode.Parent.Text);
             triggerForm.ShowDialog();
         }
 
@@ -364,6 +370,45 @@ namespace SQLite_DataBaseManager
                 db.ExecuteWithResults("DROP VIEW " + DatabaseTree.SelectedNode.Text.ToString());
                 RefreshDatabasesAction_Click(sender, e);
             }
+        }
+
+        private void DatabaseTree_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (DatabaseTree.SelectedNode.Parent != null)
+            {
+                if (DatabaseTree.SelectedNode.Parent.Text == "Databases")
+                {
+                    this.connectToDatabaseToolStripMenuItem_Click(sender, e);
+                }
+                else if (DatabaseTree.SelectedNode.Parent.Text == "Tables")
+                {
+                    this.DDL_TextBox.Text = db.GetDDL(DatabaseTree.SelectedNode.Text, "table");
+                }
+                else if (DatabaseTree.SelectedNode.Parent.Text == "Views")
+                {
+                    this.DDL_TextBox.Text = db.GetDDL(DatabaseTree.SelectedNode.Text, "view");
+                }
+                else if (DatabaseTree.SelectedNode.Parent.Text == "Indexes")
+                {
+                    this.DDL_TextBox.Text = db.GetDDL(DatabaseTree.SelectedNode.Text, "index");
+                }
+                else if (DatabaseTree.SelectedNode.Parent.Text == "Triggers")
+                {
+                    this.DDL_TextBox.Text = db.GetDDL(DatabaseTree.SelectedNode.Text, "trigger");
+                }
+                tabControl1.SelectedIndex = 1;
+            }
+            
+        }
+
+        private void OpenFileAction_Click(object sender, EventArgs e)
+        {
+            this.openFileDialog1.ShowDialog();
+        }
+
+        private void SaveFileAction_Click(object sender, EventArgs e)
+        {
+            this.saveFileDialog1.ShowDialog();
         }
       
         

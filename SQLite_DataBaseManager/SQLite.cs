@@ -96,9 +96,11 @@ namespace SQLite_DataBaseManager
             dt= ExecuteWithResults("select name from sqlite_master where type = 'index' AND tbl_name = '"+table+"';");
             return dt;
         }
-        public DataTable GetTriggers()
+        public DataTable GetTriggers(string table)
         {
-            return ExecuteWithResults("select name from sqlite_master where type = 'trigger';");
+            DataTable dt = new DataTable();
+            dt = ExecuteWithResults("select name from sqlite_master where type = 'trigger' AND tbl_name = '" + table + "';");
+            return dt;
         }
         public DataTable GetViews()
         {
@@ -110,30 +112,12 @@ namespace SQLite_DataBaseManager
             dt = ExecuteWithResults("pragma  table_info(" + nombreTabla + ");");
             return dt;
         }
-
-        public void addData(){
-            
-        }
-        public void read()
+        public string GetDDL(string objectName, string type)
         {
-
-            try
-            {
-                string sql = "pragma table_info(tabla1);";
-                SQLiteCommand command = new SQLiteCommand(sql, dbConnection);
-                SQLiteDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    Console.WriteLine("id: " + reader["id"] + "\tname: " + reader["name"]);
-
-                }
-                    
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            
+            DataTable dt = new DataTable();
+            dt = ExecuteWithResults("SELECT sql FROM sqlite_master where name = '"+objectName+"' AND type = '"+type+"';");
+            return dt.Rows[0].ItemArray[0].ToString();
         }
+        
     }
 }

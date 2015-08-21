@@ -31,8 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openSDLEditorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.DatabaseTree = new System.Windows.Forms.TreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -83,10 +81,12 @@
             this.ViewMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ColumnsMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.ColumnMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.addColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ColumnMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStrip1.SuspendLayout();
+            this.DDL_TextBox = new System.Windows.Forms.RichTextBox();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -114,6 +114,7 @@
             this.splitContainer5.SuspendLayout();
             this.toolStrip2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.tabPage2.SuspendLayout();
             this.DatabaseMenuStrip.SuspendLayout();
             this.TablesMenuStrip.SuspendLayout();
             this.TableMenuStrip.SuspendLayout();
@@ -131,29 +132,12 @@
             // 
             this.menuStrip1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(988, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
-            // 
-            // toolsToolStripMenuItem
-            // 
-            this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openSDLEditorToolStripMenuItem});
-            this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(57, 24);
-            this.toolsToolStripMenuItem.Text = "Tools";
-            // 
-            // openSDLEditorToolStripMenuItem
-            // 
-            this.openSDLEditorToolStripMenuItem.Name = "openSDLEditorToolStripMenuItem";
-            this.openSDLEditorToolStripMenuItem.Size = new System.Drawing.Size(194, 26);
-            this.openSDLEditorToolStripMenuItem.Text = "Open SDL Editor";
-            this.openSDLEditorToolStripMenuItem.Click += new System.EventHandler(this.openSDLEditorToolStripMenuItem_Click);
             // 
             // splitContainer1
             // 
@@ -183,6 +167,7 @@
             this.DatabaseTree.Size = new System.Drawing.Size(226, 570);
             this.DatabaseTree.TabIndex = 0;
             this.DatabaseTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.DatabaseTree_NodeMouseClick);
+            this.DatabaseTree.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.DatabaseTree_NodeMouseDoubleClick);
             // 
             // imageList1
             // 
@@ -291,6 +276,7 @@
             this.OpenFileAction.Size = new System.Drawing.Size(24, 22);
             this.OpenFileAction.Tag = "   ";
             this.OpenFileAction.Text = "open file";
+            this.OpenFileAction.Click += new System.EventHandler(this.OpenFileAction_Click);
             // 
             // SaveFileAction
             // 
@@ -300,6 +286,7 @@
             this.SaveFileAction.Name = "SaveFileAction";
             this.SaveFileAction.Size = new System.Drawing.Size(24, 22);
             this.SaveFileAction.Text = "save";
+            this.SaveFileAction.Click += new System.EventHandler(this.SaveFileAction_Click);
             // 
             // tabControl2
             // 
@@ -417,6 +404,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.DDL_TextBox);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -644,6 +632,12 @@
             this.ColumnsMenuStrip.Name = "ColumnsMenuStrip";
             this.ColumnsMenuStrip.Size = new System.Drawing.Size(168, 30);
             // 
+            // addColumnToolStripMenuItem
+            // 
+            this.addColumnToolStripMenuItem.Name = "addColumnToolStripMenuItem";
+            this.addColumnToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
+            this.addColumnToolStripMenuItem.Text = "Add Column";
+            // 
             // ColumnMenuStrip
             // 
             this.ColumnMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -652,17 +646,24 @@
             this.ColumnMenuStrip.Name = "ColumnMenuStrip";
             this.ColumnMenuStrip.Size = new System.Drawing.Size(184, 30);
             // 
-            // addColumnToolStripMenuItem
-            // 
-            this.addColumnToolStripMenuItem.Name = "addColumnToolStripMenuItem";
-            this.addColumnToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
-            this.addColumnToolStripMenuItem.Text = "Add Column";
-            // 
             // deleteColumnToolStripMenuItem
             // 
             this.deleteColumnToolStripMenuItem.Name = "deleteColumnToolStripMenuItem";
             this.deleteColumnToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
             this.deleteColumnToolStripMenuItem.Text = "Delete Column";
+            // 
+            // DDL_TextBox
+            // 
+            this.DDL_TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DDL_TextBox.Location = new System.Drawing.Point(3, 3);
+            this.DDL_TextBox.Name = "DDL_TextBox";
+            this.DDL_TextBox.Size = new System.Drawing.Size(744, 180);
+            this.DDL_TextBox.TabIndex = 0;
+            this.DDL_TextBox.Text = "";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // Form1
             // 
@@ -675,8 +676,6 @@
             this.Name = "Form1";
             this.Text = "SQLite Database Manager";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -708,6 +707,7 @@
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.tabPage2.ResumeLayout(false);
             this.DatabaseMenuStrip.ResumeLayout(false);
             this.TablesMenuStrip.ResumeLayout(false);
             this.TableMenuStrip.ResumeLayout(false);
@@ -727,8 +727,6 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openSDLEditorToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TreeView DatabaseTree;
         private System.Windows.Forms.SplitContainer splitContainer2;
@@ -782,6 +780,9 @@
         private System.Windows.Forms.ContextMenuStrip ColumnMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem addColumnToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem deleteColumnToolStripMenuItem;
+        private System.Windows.Forms.RichTextBox DDL_TextBox;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 
     }
 }

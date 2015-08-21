@@ -117,12 +117,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLEditorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SQLEditorForm.Designer.cs">
-      <DependentUpon>SQLEditorForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="SQLite.cs" />
     <EmbeddedResource Include="AddDataForm.resx">
       <DependentUpon>AddDataForm.cs</DependentUpon>
@@ -161,9 +155,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="SQLEditorForm.resx">
-      <DependentUpon>SQLEditorForm.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
