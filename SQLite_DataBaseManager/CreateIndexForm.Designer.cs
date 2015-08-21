@@ -34,9 +34,6 @@
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.PartialCheck = new System.Windows.Forms.CheckBox();
             this.TablesGrid = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.UniqueCheck = new System.Windows.Forms.CheckBox();
             this.TablesComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -46,6 +43,10 @@
             this.GeneratedSQL = new System.Windows.Forms.RichTextBox();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
+            this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -132,37 +133,17 @@
             this.TablesGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TablesGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
+            this.Column4,
             this.Column2,
             this.Column3});
+            this.TablesGrid.GridColor = System.Drawing.SystemColors.Control;
             this.TablesGrid.Location = new System.Drawing.Point(17, 107);
             this.TablesGrid.Name = "TablesGrid";
             this.TablesGrid.RowTemplate.Height = 24;
             this.TablesGrid.Size = new System.Drawing.Size(412, 100);
             this.TablesGrid.TabIndex = 5;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Column";
-            this.Column1.Name = "Column1";
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Collation";
-            this.Column2.Items.AddRange(new object[] {
-            "RTIM",
-            "NOCASE",
-            "BINARY"});
-            this.Column2.Name = "Column2";
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Sort";
-            this.Column3.Items.AddRange(new object[] {
-            "ASC",
-            "DESC"});
-            this.Column3.Name = "Column3";
+            this.TablesGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TablesGrid_CellClick);
+            this.TablesGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TablesGrid_CellContentClick);
             // 
             // UniqueCheck
             // 
@@ -176,6 +157,8 @@
             // 
             // TablesComboBox
             // 
+            this.TablesComboBox.CausesValidation = false;
+            this.TablesComboBox.Enabled = false;
             this.TablesComboBox.FormattingEnabled = true;
             this.TablesComboBox.Location = new System.Drawing.Point(140, 36);
             this.TablesComboBox.Name = "TablesComboBox";
@@ -213,7 +196,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(460, 334);
+            this.tabPage2.Size = new System.Drawing.Size(468, 367);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "DDL";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -223,7 +206,7 @@
             this.GeneratedSQL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GeneratedSQL.Location = new System.Drawing.Point(3, 3);
             this.GeneratedSQL.Name = "GeneratedSQL";
-            this.GeneratedSQL.Size = new System.Drawing.Size(454, 328);
+            this.GeneratedSQL.Size = new System.Drawing.Size(462, 361);
             this.GeneratedSQL.TabIndex = 0;
             this.GeneratedSQL.Text = "";
             // 
@@ -239,6 +222,7 @@
             // 
             // btnAceptar
             // 
+            this.btnAceptar.Enabled = false;
             this.btnAceptar.Location = new System.Drawing.Point(21, 25);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(84, 34);
@@ -246,6 +230,35 @@
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Column";
+            this.Column1.Name = "Column1";
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Name";
+            this.Column4.Name = "Column4";
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Collation";
+            this.Column2.Items.AddRange(new object[] {
+            "BINARY",
+            "NOCASE",
+            "RTIM"});
+            this.Column2.Name = "Column2";
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Sort";
+            this.Column3.Items.AddRange(new object[] {
+            "ASC",
+            "DESC"});
+            this.Column3.Name = "Column3";
             // 
             // CreateIndexForm
             // 
@@ -288,6 +301,7 @@
         private System.Windows.Forms.Button btnCancelar;
         private System.Windows.Forms.Button btnAceptar;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewComboBoxColumn Column2;
         private System.Windows.Forms.DataGridViewComboBoxColumn Column3;
     }

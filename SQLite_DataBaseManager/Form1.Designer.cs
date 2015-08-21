@@ -70,14 +70,22 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.ViewTableData = new System.Windows.Forms.ToolStripMenuItem();
             this.insertDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ViewMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ViewsMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DatabasesMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createADatabaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.IndexMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.IndexesMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createIndexToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.TriggerMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.createTriggerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.IndexMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ViewMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ColumnsMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ColumnMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteColumnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -109,10 +117,14 @@
             this.DatabaseMenuStrip.SuspendLayout();
             this.TablesMenuStrip.SuspendLayout();
             this.TableMenuStrip.SuspendLayout();
-            this.ViewMenuStrip.SuspendLayout();
+            this.ViewsMenuStrip.SuspendLayout();
             this.DatabasesMenuStrip.SuspendLayout();
-            this.IndexMenuStrip.SuspendLayout();
+            this.IndexesMenuStrip.SuspendLayout();
             this.TriggerMenuStrip.SuspendLayout();
+            this.IndexMenuStrip.SuspendLayout();
+            this.ViewMenuStrip.SuspendLayout();
+            this.ColumnsMenuStrip.SuspendLayout();
+            this.ColumnMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -534,14 +546,15 @@
             this.insertDataToolStripMenuItem.Name = "insertDataToolStripMenuItem";
             this.insertDataToolStripMenuItem.Size = new System.Drawing.Size(166, 26);
             this.insertDataToolStripMenuItem.Text = "Insert Data";
+            this.insertDataToolStripMenuItem.Click += new System.EventHandler(this.insertDataToolStripMenuItem_Click);
             // 
-            // ViewMenuStrip
+            // ViewsMenuStrip
             // 
-            this.ViewMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.ViewMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ViewsMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ViewsMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createViewToolStripMenuItem});
-            this.ViewMenuStrip.Name = "ViewMenuStrip";
-            this.ViewMenuStrip.Size = new System.Drawing.Size(164, 30);
+            this.ViewsMenuStrip.Name = "ViewMenuStrip";
+            this.ViewsMenuStrip.Size = new System.Drawing.Size(164, 30);
             // 
             // createViewToolStripMenuItem
             // 
@@ -563,19 +576,20 @@
             this.createADatabaseToolStripMenuItem.Size = new System.Drawing.Size(206, 26);
             this.createADatabaseToolStripMenuItem.Text = "Create a Database";
             // 
-            // IndexMenuStrip
+            // IndexesMenuStrip
             // 
-            this.IndexMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.IndexMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.IndexesMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.IndexesMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.createIndexToolStripMenuItem1});
-            this.IndexMenuStrip.Name = "IndexMenuStrip";
-            this.IndexMenuStrip.Size = new System.Drawing.Size(168, 30);
+            this.IndexesMenuStrip.Name = "IndexMenuStrip";
+            this.IndexesMenuStrip.Size = new System.Drawing.Size(168, 30);
             // 
             // createIndexToolStripMenuItem1
             // 
             this.createIndexToolStripMenuItem1.Name = "createIndexToolStripMenuItem1";
             this.createIndexToolStripMenuItem1.Size = new System.Drawing.Size(167, 26);
             this.createIndexToolStripMenuItem1.Text = "Create Index";
+            this.createIndexToolStripMenuItem1.Click += new System.EventHandler(this.createIndexToolStripMenuItem1_Click);
             // 
             // TriggerMenuStrip
             // 
@@ -590,6 +604,65 @@
             this.createTriggerToolStripMenuItem1.Name = "createTriggerToolStripMenuItem1";
             this.createTriggerToolStripMenuItem1.Size = new System.Drawing.Size(179, 26);
             this.createTriggerToolStripMenuItem1.Text = "Create Trigger";
+            this.createTriggerToolStripMenuItem1.Click += new System.EventHandler(this.createTriggerToolStripMenuItem1_Click);
+            // 
+            // IndexMenuStrip
+            // 
+            this.IndexMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.IndexMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deToolStripMenuItem});
+            this.IndexMenuStrip.Name = "IndexMenuStrip";
+            this.IndexMenuStrip.Size = new System.Drawing.Size(169, 30);
+            // 
+            // deToolStripMenuItem
+            // 
+            this.deToolStripMenuItem.Name = "deToolStripMenuItem";
+            this.deToolStripMenuItem.Size = new System.Drawing.Size(168, 26);
+            this.deToolStripMenuItem.Text = "Delete Index";
+            this.deToolStripMenuItem.Click += new System.EventHandler(this.deToolStripMenuItem_Click);
+            // 
+            // ViewMenuStrip
+            // 
+            this.ViewMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ViewMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteViewToolStripMenuItem});
+            this.ViewMenuStrip.Name = "ViewMenuStrip";
+            this.ViewMenuStrip.Size = new System.Drawing.Size(165, 30);
+            // 
+            // deleteViewToolStripMenuItem
+            // 
+            this.deleteViewToolStripMenuItem.Name = "deleteViewToolStripMenuItem";
+            this.deleteViewToolStripMenuItem.Size = new System.Drawing.Size(164, 26);
+            this.deleteViewToolStripMenuItem.Text = "Delete View";
+            this.deleteViewToolStripMenuItem.Click += new System.EventHandler(this.deleteViewToolStripMenuItem_Click);
+            // 
+            // ColumnsMenuStrip
+            // 
+            this.ColumnsMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ColumnsMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addColumnToolStripMenuItem});
+            this.ColumnsMenuStrip.Name = "ColumnsMenuStrip";
+            this.ColumnsMenuStrip.Size = new System.Drawing.Size(168, 30);
+            // 
+            // ColumnMenuStrip
+            // 
+            this.ColumnMenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.ColumnMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteColumnToolStripMenuItem});
+            this.ColumnMenuStrip.Name = "ColumnMenuStrip";
+            this.ColumnMenuStrip.Size = new System.Drawing.Size(184, 30);
+            // 
+            // addColumnToolStripMenuItem
+            // 
+            this.addColumnToolStripMenuItem.Name = "addColumnToolStripMenuItem";
+            this.addColumnToolStripMenuItem.Size = new System.Drawing.Size(167, 26);
+            this.addColumnToolStripMenuItem.Text = "Add Column";
+            // 
+            // deleteColumnToolStripMenuItem
+            // 
+            this.deleteColumnToolStripMenuItem.Name = "deleteColumnToolStripMenuItem";
+            this.deleteColumnToolStripMenuItem.Size = new System.Drawing.Size(183, 26);
+            this.deleteColumnToolStripMenuItem.Text = "Delete Column";
             // 
             // Form1
             // 
@@ -638,10 +711,14 @@
             this.DatabaseMenuStrip.ResumeLayout(false);
             this.TablesMenuStrip.ResumeLayout(false);
             this.TableMenuStrip.ResumeLayout(false);
-            this.ViewMenuStrip.ResumeLayout(false);
+            this.ViewsMenuStrip.ResumeLayout(false);
             this.DatabasesMenuStrip.ResumeLayout(false);
-            this.IndexMenuStrip.ResumeLayout(false);
+            this.IndexesMenuStrip.ResumeLayout(false);
             this.TriggerMenuStrip.ResumeLayout(false);
+            this.IndexMenuStrip.ResumeLayout(false);
+            this.ViewMenuStrip.ResumeLayout(false);
+            this.ColumnsMenuStrip.ResumeLayout(false);
+            this.ColumnMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -687,16 +764,24 @@
         private System.Windows.Forms.ToolStripMenuItem editTableToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem DeleteTable;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
-        private System.Windows.Forms.ContextMenuStrip ViewMenuStrip;
+        private System.Windows.Forms.ContextMenuStrip ViewsMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem createViewToolStripMenuItem;
         private System.Windows.Forms.ContextMenuStrip DatabasesMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem createADatabaseToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip IndexMenuStrip;
+        private System.Windows.Forms.ContextMenuStrip IndexesMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem createIndexToolStripMenuItem1;
         private System.Windows.Forms.ContextMenuStrip TriggerMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem createTriggerToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem ViewTableData;
         private System.Windows.Forms.ToolStripMenuItem insertDataToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip IndexMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem deToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip ViewMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem deleteViewToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip ColumnsMenuStrip;
+        private System.Windows.Forms.ContextMenuStrip ColumnMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem addColumnToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteColumnToolStripMenuItem;
 
     }
 }

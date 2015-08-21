@@ -21,6 +21,7 @@ namespace SQLite_DataBaseManager
         SQLEditorForm editorForm;
         CreateIndexForm indexform;
         EditTableForm editTableform;
+        CreateTriggerForm triggerForm;
         public Form1()
         {
             InitializeComponent();
@@ -75,7 +76,7 @@ namespace SQLite_DataBaseManager
                     DatabaseTree.SelectedNode.Nodes["Tables"].ContextMenuStrip = TablesMenuStrip;
                     LoadTables();
                     DatabaseTree.SelectedNode.Nodes.Add("Views", "Views", 6, 6);
-                    DatabaseTree.SelectedNode.Nodes["Views"].ContextMenuStrip = ViewMenuStrip;
+                    DatabaseTree.SelectedNode.Nodes["Views"].ContextMenuStrip = ViewsMenuStrip;
                     LoadViews();
                     DatabaseTree.SelectedNode.Expand();
                 }
@@ -95,11 +96,17 @@ namespace SQLite_DataBaseManager
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes.Add(dt.Rows[i].ItemArray[0].ToString(), dt.Rows[i].ItemArray[0].ToString(),
                     5,5);
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].ContextMenuStrip = TableMenuStrip;
+
+                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes.Add("Columns", "Columns", 9, 9);
+                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes["Columns"].ContextMenuStrip = ColumnsMenuStrip;
+
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes.Add("Indexes", "Indexes",9,9);
-                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes["Indexes"].ContextMenuStrip = IndexMenuStrip;
+                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes["Indexes"].ContextMenuStrip = IndexesMenuStrip;
+
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes.Add("Triggers", "Triggers",10,10);
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes["Triggers"].ContextMenuStrip = TriggerMenuStrip;
-               //LoadColumns(DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].ToString());
+
+                //LoadColumns(DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].ToString());
                 LoadIndexes(dt.Rows[i].ItemArray[0].ToString());
                 //LoadTriggers();
             }
@@ -118,6 +125,7 @@ namespace SQLite_DataBaseManager
             {
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[table].Nodes["Indexes"].Nodes.Add(dt.Rows[i].ItemArray[0].ToString(),
                     dt.Rows[i].ItemArray[0].ToString(), 5, 5);
+                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[table].Nodes["Indexes"].Nodes[i].ContextMenuStrip = IndexMenuStrip;
             }
         }
 
@@ -214,7 +222,7 @@ namespace SQLite_DataBaseManager
 
         private void createToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            indexform = new CreateIndexForm(db);
+            indexform = new CreateIndexForm(db,this.DatabaseTree.SelectedNode.Parent.Text);
             indexform.ShowDialog();
         }
 
@@ -240,7 +248,7 @@ namespace SQLite_DataBaseManager
                 }
                 catch (Exception ex)
                 {
-                    AppendText(ex.Message, Color.Black);
+                    AppendText(ex.Message, Color.Red);
                 }
             }
             else
@@ -317,6 +325,45 @@ namespace SQLite_DataBaseManager
         {
             editTableform = new EditTableForm(db);
             editTableform.ShowDialog();
+        }
+
+        private void insertDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddDataForm dataform = new AddDataForm(DatabaseTree.SelectedNode.Text, db);
+            dataform.Show();
+        }
+
+        private void createIndexToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            createToolStripMenuItem1_Click(sender, e);
+        }
+
+        private void createTriggerToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            triggerForm = new CreateTriggerForm(db);
+            triggerForm.ShowDialog();
+        }
+
+        private void deToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if ((MessageBox.Show("Drop index: " + DatabaseTree.SelectedNode.Text.ToString() + "?", "Drop index",
+            MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+            MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+                db.ExecuteWithResults("DROP INDEX " + DatabaseTree.SelectedNode.Text.ToString());
+                RefreshDatabasesAction_Click(sender, e);
+            }
+        }
+
+        private void deleteViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if ((MessageBox.Show("Drop view: " + DatabaseTree.SelectedNode.Text.ToString() + "?", "Drop view",
+            MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+            MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
+            {
+                db.ExecuteWithResults("DROP VIEW " + DatabaseTree.SelectedNode.Text.ToString());
+                RefreshDatabasesAction_Click(sender, e);
+            }
         }
       
         

@@ -50,18 +50,45 @@ namespace SQLite_DataBaseManager
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            GenerarDDL();
-            try
+            if (!String.IsNullOrEmpty(this.txtTableName.Text))
             {
-                string sql = this.GeneratedSQL.Text;
-                db.ExecuteNonQuery(sql);
+                GenerarDDL();
+                if (!ExisteTabla(this.txtTableName.Text))
+                {
+                    try
+                    {
+                        string sql = this.GeneratedSQL.Text;
+                        db.ExecuteNonQuery(sql);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    MessageBox.Show("Table " + this.txtTableName.Text + " created successfully!");
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("La tabla " + txtTableName.Text + " ya existe");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex.Message);
+                MessageBox.Show("User please,... add a table name");
             }
-            MessageBox.Show("Table "+ this.txtTableName.Text+" created successfully!");
-            this.Close();
+            
+            
+        }
+
+        private bool ExisteTabla(string nombreTabla)
+        {
+            DataTable dt = db.GetTables();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                if (dt.Rows[i].ItemArray[0].ToString() == nombreTabla)
+                    return true;
+            }
+            return false;
         }
 
         private void tabPage1_Leave(object sender, EventArgs e)
@@ -71,37 +98,43 @@ namespace SQLite_DataBaseManager
 
         private void GenerarDDL()
         {
-            sql = "CREATE TABLE " + this.txtTableName.Text+" (";
-            int n = this.ColumnasGrid.Rows.Count;
-            var row = ColumnasGrid.Rows;
-            for (int i = 0; i < n; i++)
-            {
-                var pk = row[i].Cells[0].Value;
-                var nombreColumna = row[i].Cells[1].Value;
-                var tipo_de_dato = row[i].Cells[2].Value;
-                var tamano = row[i].Cells[3].Value;
-                var noNulo = row[i].Cells[4].Value;
+            
+                sql = "CREATE TABLE " + this.txtTableName.Text + " (";
+                int n = this.ColumnasGrid.Rows.Count;
+                var row = ColumnasGrid.Rows;
+                for (int i = 0; i < n; i++)
+                {
+                    var pk = row[i].Cells[0].Value;
+                    var nombreColumna = row[i].Cells[1].Value;
+                    var tipo_de_dato = row[i].Cells[2].Value;
+                    var tamano = row[i].Cells[3].Value;
+                    var noNulo = row[i].Cells[4].Value;
 
-                sql+="\n    "+nombreColumna+" ";
-                sql+=tipo_de_dato+" ";
-                if(tamano!= null){
-                    sql+="("+tamano+") ";
+                    sql += "\n    " + nombreColumna + " ";
+                    sql += tipo_de_dato + " ";
+                    if (tamano != null)
+                    {
+                        sql += "(" + tamano + ") ";
+                    }
+                    if (noNulo != null)
+                    {
+                        sql += "NOT NULL ";
+                    }
+                    if (pk != null)
+                    {
+                        sql += "PRIMARY KEY";
+                    }
+                    if (i != n - 1)
+                    {
+                        sql += ", ";
+                    }
                 }
-                if (noNulo!= null)
-                {
-                    sql += "NOT NULL ";
-                }
-                if (pk != null)
-                {
-                    sql += "PRIMARY KEY";
-                }
-                if (i != n-1)
-                {
-                    sql += ", ";
-                }
-            }
-            sql += "\n );";
-            this.GeneratedSQL.Text = sql;
+                sql += "\n );";
+                this.GeneratedSQL.Text = sql;
+            
+                
+            
+            
         }
     }
 }

@@ -61,6 +61,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddDataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddDataForm.Designer.cs">
+      <DependentUpon>AddDataForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ConnectDatabaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +124,9 @@
       <DependentUpon>SQLEditorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SQLite.cs" />
+    <EmbeddedResource Include="AddDataForm.resx">
+      <DependentUpon>AddDataForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConnectDatabaseForm.resx">
       <DependentUpon>ConnectDatabaseForm.cs</DependentUpon>
     </EmbeddedResource>

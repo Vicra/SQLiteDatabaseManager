@@ -14,39 +14,94 @@ namespace SQLite_DataBaseManager
     {
         string sql = "";
         SQLite db;
-        public CreateIndexForm(SQLite database)
+        public CreateIndexForm(SQLite database,string tableName)
         {
+
+            InitializeComponent(); 
+            this.TablesComboBox.Text = tableName;
             db = database;
-            InitializeComponent();
-            this.TablesGrid.Rows.Add();
+            AddColumnsToGrid();
         }
+
+        private void AddColumnsToGrid()
+        {
+            DataTable dt = new DataTable();
+            dt = db.ExecuteWithResults("pragma table_info(" + this.TablesComboBox.Text + ");");
+            TablesGrid.Rows.Add();
+            TablesGrid.Rows[0].Cells[1].Value = dt.Rows[0].ItemArray[1].ToString();
+            TablesGrid.Rows[0].Cells[2].ReadOnly = true;
+            TablesGrid.Rows[0].Cells[3].ReadOnly = true;
+        }
+        
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            GenerarDDL();
-            try
+            if (!String.IsNullOrEmpty(this.txtIndexName.Text))
             {
-                string sql = this.GeneratedSQL.Text;
-                db.ExecuteNonQuery(sql);
+                GenerarDDL();
+                if (!ExisteIndex(this.txtIndexName.Text, TablesComboBox.Text))
+                {
+                    try
+                    {
+                        string sql = this.GeneratedSQL.Text;
+                        db.ExecuteNonQuery(sql);
+                        MessageBox.Show("Index " + this.txtIndexName + " created successfully");
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("el Index " + txtIndexName.Text + " ya existe");
+                }
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex.Message);
+                MessageBox.Show("User please,... add an index name");
             }
+        }
+
+        private bool ExisteIndex(string indexName,string tablename)
+        {
+            DataTable dt = db.GetIndexes(tablename);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                if (dt.Rows[i].ItemArray[0].ToString() == indexName)
+                    return true;
+            }
+            return false;
         }
 
         private void GenerarDDL()
         {
-            sql = "CREATE"; 
-            if (UniqueCheck.Checked)
+            try
             {
-                sql += " UNIQUE ";
-            }
-            sql += " INDEX " + this.txtIndexName.Text;
-            sql+= " ON "+TablesComboBox.Text+" (";
+                sql = "CREATE";
+                if (UniqueCheck.Checked)
+                {
+                    sql += " UNIQUE ";
+                }
+                sql += " INDEX " + this.txtIndexName.Text;
+                sql += " ON " + TablesComboBox.Text + " (\n";
 
-            sql += "\n );";
-            this.GeneratedSQL.Text = sql;
+                sql += "\t" + TablesGrid.Rows[0].Cells[1].Value.ToString() + " ";
+                if (!String.IsNullOrEmpty(TablesGrid.Rows[0].Cells[2].Value.ToString()))
+                {
+                    sql += "COLLATE " + TablesGrid.Rows[0].Cells[2].Value.ToString() + " ";
+                }
+                sql += TablesGrid.Rows[0].Cells[3].Value.ToString() + "\n";
+
+                sql += " );";
+                this.GeneratedSQL.Text = sql;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -70,6 +125,32 @@ namespace SQLite_DataBaseManager
                 this.richTextBox2.Enabled = true;
             else if (this.richTextBox2.Enabled)
                 this.richTextBox2.Enabled = false;
+        }
+
+        private void TablesGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            
+        }
+
+        private void TablesGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if (e.ColumnIndex == 0)
+            {
+                if (this.TablesGrid.Rows[0].Cells[2].ReadOnly == true)
+                {
+                    this.TablesGrid.Rows[0].Cells[2].ReadOnly = false;
+                    this.TablesGrid.Rows[0].Cells[3].ReadOnly = false;
+                    this.btnAceptar.Enabled = true;
+                }
+                else
+                {
+                    this.TablesGrid.Rows[0].Cells[2].ReadOnly = true;
+                    this.TablesGrid.Rows[0].Cells[3].ReadOnly = true;
+                    this.btnAceptar.Enabled = false;
+                }
+
+            }
         }
     }
 }

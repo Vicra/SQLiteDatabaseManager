@@ -12,8 +12,10 @@ namespace SQLite_DataBaseManager
 {
     public partial class CreateTriggerForm : Form
     {
-        public CreateTriggerForm()
+        SQLite db;
+        public CreateTriggerForm(SQLite databases)
         {
+            db = databases;
             InitializeComponent();
         }
 

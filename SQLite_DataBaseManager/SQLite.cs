@@ -29,7 +29,11 @@ namespace SQLite_DataBaseManager
         }
         public void CloseConnection()
         {
-            dbConnection.Close();
+            if (dbConnection != null)
+            {
+                dbConnection.Close();
+            }
+            
         }
         public void CreateDatabase(string name)
         {
