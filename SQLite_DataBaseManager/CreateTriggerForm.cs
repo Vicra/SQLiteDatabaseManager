@@ -42,13 +42,13 @@ namespace SQLite_DataBaseManager
                     {
                         string sql = this.richTextBox2.Text;
                         db.ExecuteNonQuery(sql);
+                        MessageBox.Show("trigger " + this.txtName.Text + " created successfully!");
+                        this.Close();
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine(ex.Message);
+                        MessageBox.Show(ex.Message);
                     }
-                    MessageBox.Show("trigger " + this.txtName.Text + " created successfully!");
-                    this.Close();
                 }
                 else
                 {
@@ -59,7 +59,6 @@ namespace SQLite_DataBaseManager
             {
                 MessageBox.Show("missing fields");
             }
-            
         }
 
         private bool ExisteTrigger(string tableName, string trigger)
@@ -86,8 +85,8 @@ namespace SQLite_DataBaseManager
             sql += "CREATE TRIGGER "+name+"\n";
             sql += "\t"+when+" ";
             sql += action;
-            sql += "\n\tON "+table+"\n";
-            sql += scope;
+            sql += "\n\t ON "+table+" \n";
+            sql += scope+" ";
 
             sql += "\nBEGIN \n";
             sql += "\t"+code;

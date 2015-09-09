@@ -32,8 +32,26 @@ namespace SQLite_DataBaseManager
         private void CreateDBbtn_Click_1(object sender, EventArgs e)
         {
             string name = DBNameText.Text;
-            db.CreateDatabase(name);
-            this.Close();
+            try
+            {
+                db.CreateDatabase(name);
+                this.Close();
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+            
+            
         }
+
+        private void label2_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

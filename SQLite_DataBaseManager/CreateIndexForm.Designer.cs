@@ -34,6 +34,10 @@
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.PartialCheck = new System.Windows.Forms.CheckBox();
             this.TablesGrid = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.UniqueCheck = new System.Windows.Forms.CheckBox();
             this.TablesComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -43,10 +47,6 @@
             this.GeneratedSQL = new System.Windows.Forms.RichTextBox();
             this.btnCancelar = new System.Windows.Forms.Button();
             this.btnAceptar = new System.Windows.Forms.Button();
-            this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -145,6 +145,35 @@
             this.TablesGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TablesGrid_CellClick);
             this.TablesGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TablesGrid_CellContentClick);
             // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Column";
+            this.Column1.Name = "Column1";
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Name";
+            this.Column4.Name = "Column4";
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Collation";
+            this.Column2.Items.AddRange(new object[] {
+            "BINARY",
+            "NOCASE",
+            "RTIM"});
+            this.Column2.Name = "Column2";
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Sort";
+            this.Column3.Items.AddRange(new object[] {
+            "ASC",
+            "DESC"});
+            this.Column3.Name = "Column3";
+            // 
             // UniqueCheck
             // 
             this.UniqueCheck.AutoSize = true;
@@ -222,7 +251,6 @@
             // 
             // btnAceptar
             // 
-            this.btnAceptar.Enabled = false;
             this.btnAceptar.Location = new System.Drawing.Point(21, 25);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(84, 34);
@@ -230,35 +258,6 @@
             this.btnAceptar.Text = "Aceptar";
             this.btnAceptar.UseVisualStyleBackColor = true;
             this.btnAceptar.Click += new System.EventHandler(this.btnAceptar_Click);
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Column";
-            this.Column1.Name = "Column1";
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Name";
-            this.Column4.Name = "Column4";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Collation";
-            this.Column2.Items.AddRange(new object[] {
-            "BINARY",
-            "NOCASE",
-            "RTIM"});
-            this.Column2.Name = "Column2";
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Sort";
-            this.Column3.Items.AddRange(new object[] {
-            "ASC",
-            "DESC"});
-            this.Column3.Name = "Column3";
             // 
             // CreateIndexForm
             // 

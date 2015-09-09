@@ -29,8 +29,8 @@ namespace SQLite_DataBaseManager
             dt = db.ExecuteWithResults("pragma table_info(" + this.TablesComboBox.Text + ");");
             TablesGrid.Rows.Add();
             TablesGrid.Rows[0].Cells[1].Value = dt.Rows[0].ItemArray[1].ToString();
-            TablesGrid.Rows[0].Cells[2].ReadOnly = true;
-            TablesGrid.Rows[0].Cells[3].ReadOnly = true;
+            TablesGrid.Rows[0].Cells[2].Value = "BINARY";
+            TablesGrid.Rows[0].Cells[3].Value = "ASC";
         }
         
 
@@ -45,7 +45,7 @@ namespace SQLite_DataBaseManager
                     {
                         string sql = this.GeneratedSQL.Text;
                         db.ExecuteNonQuery(sql);
-                        MessageBox.Show("Index " + this.txtIndexName + " created successfully");
+                        MessageBox.Show("Index " + this.txtIndexName.Text + " created successfully");
                         this.Close();
                     }
                     catch (Exception ex)
@@ -87,12 +87,17 @@ namespace SQLite_DataBaseManager
                 sql += " INDEX " + this.txtIndexName.Text;
                 sql += " ON " + TablesComboBox.Text + " (\n";
 
-                sql += "\t" + TablesGrid.Rows[0].Cells[1].Value.ToString() + " ";
-                if (!String.IsNullOrEmpty(TablesGrid.Rows[0].Cells[2].Value.ToString()))
+                if (!String.IsNullOrEmpty(TablesGrid.Rows[0].Cells[1].Value.ToString()))
+                {
+                    sql += "\t" + TablesGrid.Rows[0].Cells[1].Value.ToString() + " ";
+                }
+                
+                if (!String.IsNullOrEmpty(TablesGrid.Rows[0].Cells[2].Value.ToString()) && !String.IsNullOrEmpty(TablesGrid.Rows[0].Cells[3].Value.ToString()))
                 {
                     sql += "COLLATE " + TablesGrid.Rows[0].Cells[2].Value.ToString() + " ";
+                    sql += TablesGrid.Rows[0].Cells[3].Value.ToString() + "\n";
                 }
-                sql += TablesGrid.Rows[0].Cells[3].Value.ToString() + "\n";
+                
 
                 sql += " );";
                 this.GeneratedSQL.Text = sql;
@@ -135,22 +140,7 @@ namespace SQLite_DataBaseManager
         private void TablesGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
-            if (e.ColumnIndex == 0)
-            {
-                if (this.TablesGrid.Rows[0].Cells[2].ReadOnly == true)
-                {
-                    this.TablesGrid.Rows[0].Cells[2].ReadOnly = false;
-                    this.TablesGrid.Rows[0].Cells[3].ReadOnly = false;
-                    this.btnAceptar.Enabled = true;
-                }
-                else
-                {
-                    this.TablesGrid.Rows[0].Cells[2].ReadOnly = true;
-                    this.TablesGrid.Rows[0].Cells[3].ReadOnly = true;
-                    this.btnAceptar.Enabled = false;
-                }
-
-            }
+            
         }
     }
 }

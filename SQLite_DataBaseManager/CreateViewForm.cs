@@ -36,18 +36,29 @@ namespace SQLite_DataBaseManager
 
         private void okBtn_Click(object sender, EventArgs e)
         {
-            GenerarDDL();
-            try
+            if (!String.IsNullOrEmpty(textBox1.Text))
             {
-                string sql = this.GeneratedSQL.Text;
-                db.ExecuteNonQuery(sql);
+                GenerarDDL();
+                try
+                {
+                    string sql = this.GeneratedSQL.Text;
+                    db.ExecuteNonQuery(sql);
+                    MessageBox.Show("View " + textBox1.Text+" created succesfully");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine(ex.Message);
+                MessageBox.Show("User please,... add a view name");
             }
             
+            
         }
+        
 
         private void textBox1_Leave(object sender, EventArgs e)
         {

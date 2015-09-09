@@ -38,9 +38,9 @@
             this.CreateDBbtn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.CreateDBbtn.Location = new System.Drawing.Point(100, 164);
+            this.CreateDBbtn.Location = new System.Drawing.Point(135, 146);
             this.CreateDBbtn.Name = "CreateDBbtn";
-            this.CreateDBbtn.Size = new System.Drawing.Size(170, 67);
+            this.CreateDBbtn.Size = new System.Drawing.Size(174, 66);
             this.CreateDBbtn.TabIndex = 7;
             this.CreateDBbtn.Text = "Create Database";
             this.CreateDBbtn.UseVisualStyleBackColor = true;
@@ -52,7 +52,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(97, 74);
+            this.label1.Location = new System.Drawing.Point(84, 72);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(45, 17);
             this.label1.TabIndex = 4;
@@ -63,16 +63,16 @@
             this.DBNameText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.DBNameText.Location = new System.Drawing.Point(159, 74);
+            this.DBNameText.Location = new System.Drawing.Point(135, 72);
             this.DBNameText.Name = "DBNameText";
-            this.DBNameText.Size = new System.Drawing.Size(100, 22);
+            this.DBNameText.Size = new System.Drawing.Size(174, 22);
             this.DBNameText.TabIndex = 5;
             // 
             // CreateDatabaseForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(416, 308);
+            this.ClientSize = new System.Drawing.Size(420, 307);
             this.Controls.Add(this.CreateDBbtn);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.DBNameText);

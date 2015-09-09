@@ -39,12 +39,14 @@ namespace SQLite_DataBaseManager
         {
             SQLiteConnection.CreateFile(name + ".sqlite");
             ConnectDatabase(name);
+            dbConnection.Close();
 
         }
         public void CreateDatabase(string name,string password)
         {
             SQLiteConnection.CreateFile(name+".sqlite");
             ConnectDatabase(name,password);
+            dbConnection.Close();
         }
         public void DeleteDatabase(string name)
         {
