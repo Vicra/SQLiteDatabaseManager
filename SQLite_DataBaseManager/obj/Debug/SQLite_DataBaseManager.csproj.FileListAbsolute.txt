@@ -22,3 +22,29 @@ C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLit
 C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.CreateIndexForm.resources
 C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.CreateTriggerForm.resources
 C:\Users\dell\documents\visual studio 2013\Projects\SQLite_DataBaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.AddDataForm.resources
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\bin\Debug\SQLite_DataBaseManager.exe.config
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\bin\Debug\SQLite_DataBaseManager.exe
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\bin\Debug\SQLite_DataBaseManager.pdb
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\bin\Debug\EntityFramework.dll
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\bin\Debug\System.Data.SQLite.dll
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\bin\Debug\System.Data.SQLite.EF6.dll
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\bin\Debug\System.Data.SQLite.Linq.dll
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\bin\Debug\EntityFramework.xml
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\bin\Debug\System.Data.SQLite.xml
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.csprojResolveAssemblyReference.cache
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.AddDataForm.resources
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.ConnectDatabaseForm.resources
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.CreateDatabaseForm.resources
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.CreateIndexForm.resources
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.CreateTableForm.resources
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.CreateTriggerForm.resources
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.CreateViewForm.resources
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.Form1.resources
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.Properties.Resources.resources
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.csproj.GenerateResource.cache
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.csproj.CoreCompileInputs.cache
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.csproj.CopyComplete
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.exe
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.pdb

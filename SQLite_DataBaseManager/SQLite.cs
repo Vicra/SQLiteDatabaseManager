@@ -50,10 +50,9 @@ namespace SQLite_DataBaseManager
         }
         public void DeleteDatabase(string name)
         {
-            if (System.IO.File.Exists("C:/Users/dell/Documents/Visual Studio 2013/Projects/SQLite_DataBaseManager/SQLite_DataBaseManager/bin/Debug/" + name + ".sqlite"))
-                System.IO.File.Delete("C:/Users/dell/Documents/Visual Studio 2013/Projects/SQLite_DataBaseManager/SQLite_DataBaseManager/bin/Debug/" + name + ".sqlite"); 
+            if (System.IO.File.Exists("C:/Users/vicra/Documents/GitHub/SQLiteDatabaseManager/SQLite_DataBaseManager/bin/Debug/" + name + ".sqlite"))
+                System.IO.File.Delete("C:/Users/vicra/Documents/GitHub/SQLiteDatabaseManager/SQLite_DataBaseManager/bin/Debug/" + name + ".sqlite"); 
         }
-
        
         public bool isConnected()
         {

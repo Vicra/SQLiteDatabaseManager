@@ -59,25 +59,29 @@ namespace SQLite_DataBaseManager
                     {
                         string sql = this.GeneratedSQL.Text;
                         db.ExecuteNonQuery(sql);
+                        MessageBox.Show("Table " + this.txtTableName.Text + " created successfully!");
+                        this.Close();
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
-                    }
-                    MessageBox.Show("Table " + this.txtTableName.Text + " created successfully!");
-                    this.Close();
+                        var errorMessage = ex.Message;
+                        if (ex.InnerException != null && ex.InnerException.Message != null)
+                        {
+                            errorMessage += ex.InnerException.Message;
+                        }
+                        MessageBox.Show(errorMessage);
+                    }   
                 }
                 else
                 {
-                    MessageBox.Show("La tabla " + txtTableName.Text + " ya existe");
+                    MessageBox.Show("The table " + txtTableName.Text + " already exists.");
                 }
             }
             else
             {
-                MessageBox.Show("User please,... add a table name");
+                MessageBox.Show("Add a table name");
             }
-            
-            
         }
 
         private bool ExisteTabla(string nombreTabla)
@@ -98,7 +102,6 @@ namespace SQLite_DataBaseManager
 
         private void GenerarDDL()
         {
-            
                 sql = "CREATE TABLE " + this.txtTableName.Text + " (";
                 int n = this.ColumnasGrid.Rows.Count;
                 var row = ColumnasGrid.Rows;
@@ -120,7 +123,7 @@ namespace SQLite_DataBaseManager
                     {
                         sql += "NOT NULL ";
                     }
-                    if (pk != null)
+                    if (pk != null && (bool)pk == true)
                     {
                         sql += "PRIMARY KEY";
                     }

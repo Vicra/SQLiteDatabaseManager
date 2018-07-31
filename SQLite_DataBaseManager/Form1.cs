@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Windows;
 
 namespace SQLite_DataBaseManager
 {
@@ -16,7 +10,6 @@ namespace SQLite_DataBaseManager
     {
         string lastSelect = "";
         SQLite db = new SQLite();
-        SQLite dbs = new SQLite();
         CreateViewForm viewForm;
         CreateDatabaseForm createForm;
         CreateTableForm createTableForm;
@@ -33,7 +26,7 @@ namespace SQLite_DataBaseManager
             DatabaseTree.Nodes.Clear();
             DatabaseTree.Nodes.Add("Databases", "Databases","server.png","server.png");
             DatabaseTree.Nodes["Databases"].ContextMenuStrip = DatabasesMenuStrip;
-            string[] files = Directory.GetFiles("C:/Users/dell/Documents/Visual Studio 2013/Projects/SQLite_DataBaseManager/SQLite_DataBaseManager/bin/Debug");
+            string[] files = Directory.GetFiles("C:/Users/vicra/Documents/GitHub/SQLiteDatabaseManager/SQLite_DataBaseManager/bin/Debug");
             string[] dabatases;
             foreach (string file in files)
             {
@@ -302,7 +295,6 @@ namespace SQLite_DataBaseManager
 
 
                     db.ConnectDatabase(DatabaseTree.SelectedNode.Text.ToString());
-                    dbs = db;
                     if (DatabaseTree.SelectedNode.Nodes.Count == 0)
                     {
                         DatabaseTree.SelectedNode.Nodes.Add("Tables", "Tables", "tablas.png", "tablas.png");
