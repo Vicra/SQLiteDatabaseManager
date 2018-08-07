@@ -1,52 +1,61 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Data;
+using System.IO;
 
 namespace SQLite_DataBaseManager
 {
     public class SQLite
     {
         public SQLiteConnection dbConnection { get; set; }
+        public FileConnections fileConnections;
         public SQLite()
         {
-
-        }
-        public void ConnectDatabase(string name, string password)
-        {
-            dbConnection = new SQLiteConnection("Data Source=" + name + ".sqlite;Version=3;Password  = " + password);
-            dbConnection.Open();
-            
+            fileConnections = new FileConnections();
         }
         public void ConnectDatabase(string name)
         {
-            dbConnection = new SQLiteConnection("Data Source=" + name + ".sqlite;Version=3;");
+            dbConnection = new SQLiteConnection("Data Source=" + name + ";Version=3;");
             dbConnection.Open();
-            
         }
+
+        public void createNewConnection(string filePathName)
+        {
+            string fileName = Path.GetFileName(filePathName);
+            string path = Path.GetDirectoryName(filePathName);
+            fileConnections.addConnection(fileName, path);
+        }
+
         public void CloseConnection()
         {
             if (dbConnection != null)
             {
                 dbConnection.Close();
             }
-            
         }
-        public void CreateDatabase(string name)
-        {
-            SQLiteConnection.CreateFile(name + ".sqlite");
-            ConnectDatabase(name);
-            dbConnection.Close();
 
-        }
-        public void CreateDatabase(string name,string password)
+        public void checkConnection(string filePathName)
         {
-            SQLiteConnection.CreateFile(name+".sqlite");
-            ConnectDatabase(name,password);
-            dbConnection.Close();
+            SQLiteConnection testConnection;
+            if (File.Exists(filePathName))
+            {
+                testConnection = new SQLiteConnection("Data Source=" + filePathName + ";Version=3");
+                testConnection.Open();
+                testConnection.Close();
+            }
+        }
+
+        public void CreateDatabase(string name, string path, bool saveConnection)
+        {
+            SQLiteConnection.CreateFile(path + "\\" + name);
+            var createDatabaseConnection = new SQLiteConnection("Data Source=" + path + "\\" + name + ";Version=3;");
+            createDatabaseConnection.Open();
+            createDatabaseConnection.Close();
+
+            if (saveConnection)
+            {
+                fileConnections.addConnection(name, path);
+            }
         }
         public void DeleteDatabase(string name)
         {

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace SQLite_DataBaseManager
@@ -19,39 +14,55 @@ namespace SQLite_DataBaseManager
             InitializeComponent();
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void btnCreateDatabase_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void CreateDatabaseForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CreateDBbtn_Click_1(object sender, EventArgs e)
-        {
-            string name = DBNameText.Text;
+            string name = txtDatabaseName.Text + ".sqlite";
+            string path = txtLocation.Text;
+            bool savePassword = checkBoxSaveConnection.Checked;
             try
             {
-                db.CreateDatabase(name);
-                this.Close();
-                
+                if (hasValidName(name) && hasValidPath(path))
+                {
+                    db.CreateDatabase(name, path, savePassword);
+                    MessageBox.Show("Database created successfully.");
+                    this.Close();
+                }
+                else if (!hasValidName(name))
+                {
+                    MessageBox.Show("Invalid file name input.");
+                }
+                else if (!hasValidPath(path))
+                {
+                    MessageBox.Show("Invalid path input.");
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                string error = ex.Message;
+                if (ex.InnerException != null && ex.InnerException.Message != null)
+                {
+                    error += " InnerException: " + ex.InnerException.Message;
+                }
+                MessageBox.Show(error);
             }
-            
-            
-            
         }
 
-        private void label2_Click_1(object sender, EventArgs e)
+        private bool hasValidPath(string path)
         {
-
+            return Directory.Exists(path);
         }
 
-        
+        private bool hasValidName(string fileName)
+        {
+            return true;
+        }
+
+        private void btnOpenFileBrowser_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+            {
+                txtLocation.Text = folderBrowserDialog1.SelectedPath;
+            }
+        }
     }
 }

@@ -15,8 +15,11 @@ namespace SQLite_DataBaseManager
         CreateTableForm createTableForm;
         CreateIndexForm indexform;
         CreateTriggerForm triggerForm;
+        FileConnections fileConnections;
         public Form1()
         {
+            this.Refresh();
+            fileConnections = new FileConnections();
             InitializeComponent();
             InitializeDatabases();
         }
@@ -24,18 +27,16 @@ namespace SQLite_DataBaseManager
         private void InitializeDatabases()
         {
             DatabaseTree.Nodes.Clear();
-            DatabaseTree.Nodes.Add("Databases", "Databases","server.png","server.png");
+            DatabaseTree.Nodes.Add("Databases", "Databases","servers.png", "servers.png");
             DatabaseTree.Nodes["Databases"].ContextMenuStrip = DatabasesMenuStrip;
-            string[] files = Directory.GetFiles("C:/Users/vicra/Documents/GitHub/SQLiteDatabaseManager/SQLite_DataBaseManager/bin/Debug");
-            string[] dabatases;
-            foreach (string file in files)
+
+            var connections = fileConnections.getConnections();
+            foreach (DatabaseConnection connection in connections)
             {
-                if (file.EndsWith(".sqlite"))
-                {
-                    dabatases = file.Split('\\','.');
-                    DatabaseTree.Nodes[0].Nodes.Add(dabatases[dabatases.Length - 2].ToString(),
-                        dabatases[dabatases.Length - 2].ToString(), "db.png", "db.png");
-                }
+                DatabaseTree.Nodes[0].Nodes.Add(connection.Path,
+                    connection.Name + "(" + connection.Path + ")",
+                    "db.png",
+                    "db.png");
             }
             int n = DatabaseTree.Nodes[0].Nodes.Count;
             for (int i = 0; i < n; i++)
@@ -45,34 +46,23 @@ namespace SQLite_DataBaseManager
             DatabaseTree.Nodes[0].ExpandAll();
         }
 
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-        private void eventLog1_EntryWritten(object sender, System.Diagnostics.EntryWrittenEventArgs e)
-        {
-
-        }
         private void LoadTables()
         {
             DataTable dt = db.GetTables();
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes.Add(dt.Rows[i].ItemArray[0].ToString(), dt.Rows[i].ItemArray[0].ToString(),
-                    "tabla.png", "tabla.png");
+                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes.Add(
+                    dt.Rows[i].ItemArray[0].ToString(), 
+                    dt.Rows[i].ItemArray[0].ToString(),
+                    "table.png", "table.png");
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].ContextMenuStrip = TableMenuStrip;
 
-                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes.Add("Columns", "Columns", "columnas.png", "columna.png");
+                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes.Add("Columns", "Columns", "columns.png", "columns.png");
 
-                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes.Add("Indexes", "Indexes", "indexes.png", "indexes.png");
+                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes.Add("Indexes", "Indexes", "tags.png", "tags.png");
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes["Indexes"].ContextMenuStrip = IndexesMenuStrip;
 
-                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes.Add("Triggers", "Triggers", "triggers.png", "triggers.png");
+                DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes.Add("Triggers", "Triggers", "tools.png", "tools.png");
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes["Triggers"].ContextMenuStrip = TriggersMenuStrip;
 
 
@@ -81,7 +71,7 @@ namespace SQLite_DataBaseManager
                 LoadIndexes(dt.Rows[i].ItemArray[0].ToString());
                 LoadTriggers(tableName);
             }
-                
+            this.Refresh();
         }
 
         private void LoadTriggers(string table)
@@ -90,7 +80,7 @@ namespace SQLite_DataBaseManager
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[table].Nodes["Triggers"].Nodes.Add(dt.Rows[i].ItemArray[0].ToString(),
-                    dt.Rows[i].ItemArray[0].ToString(), "trigger.png", "trigger.png");
+                    dt.Rows[i].ItemArray[0].ToString(), "tool.png", "tool.png");
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[table].Nodes["Triggers"].Nodes[i].ContextMenuStrip = TriggerMenuStrip;
             }
         }
@@ -101,7 +91,7 @@ namespace SQLite_DataBaseManager
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[table].Nodes["Indexes"].Nodes.Add(dt.Rows[i].ItemArray[0].ToString(),
-                    dt.Rows[i].ItemArray[0].ToString(), "index.png", "index.png");
+                    dt.Rows[i].ItemArray[0].ToString(), "tag.png", "tag.png");
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[table].Nodes["Indexes"].Nodes[i].ContextMenuStrip = IndexMenuStrip;
             }
         }
@@ -112,7 +102,7 @@ namespace SQLite_DataBaseManager
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[table].Nodes["Columns"].Nodes.Add(dt.Rows[i].ItemArray[1].ToString(),
-                    dt.Rows[i].ItemArray[1].ToString(), "columna.png", "columna.png");
+                    dt.Rows[i].ItemArray[1].ToString(), "column.png", "column.png");
             }
         }
         private void LoadViews()
@@ -149,22 +139,6 @@ namespace SQLite_DataBaseManager
                 db.DeleteDatabase(DatabaseTree.SelectedNode.Text.ToString());
                 RefreshDatabasesAction_Click(sender, e);
             }
-        }
-
-        private void splitContainer2_Panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-           
-        }
-
-        private void databaseToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void CreateView_Click(object sender, EventArgs e)
@@ -247,17 +221,7 @@ namespace SQLite_DataBaseManager
 
         private void Refresh_Click(object sender, EventArgs e)
         {
-            //var s = this.DatabaseTree.SelectedNode.Text;
             InitializeDatabases();
-
-            //for (int i = 0; i < this.DatabaseTree.Nodes.Count; i++)
-            //{
-            //    if (this.DatabaseTree.Nodes[i].Text == s)
-            //    {
-            //        DatabaseTree.SelectedNode = DatabaseTree.Nodes[i];
-            //    }
-            //}
-            //ConnectDatabase_Click(sender, e);
         }
 
         private void ConnectDatabase_Click(object sender, EventArgs e)
@@ -267,37 +231,15 @@ namespace SQLite_DataBaseManager
             {
                 try
                 {
-                    //trying new code heree
+                    string[] nameElements = DatabaseTree.SelectedNode.Text.ToString().Split('(');
+                    string name = nameElements[0];
+                    string path = nameElements[1].Replace(")","");
+                    string filePathName = path + "\\" + name;
 
-
-
-                    //string dbName = DatabaseTree.SelectedNode.Text;
-
-                    //string oldDBname="";
-                    //for (int i = 0; i < DatabaseTree.Nodes[0].Nodes.Count; i++)
-                    //{
-                    //    if (DatabaseTree.Nodes[0].Nodes[i].Nodes.Count > 1)
-                    //    {
-                    //        oldDBname = DatabaseTree.Nodes[0].Nodes[i].Text;
-                    //    }
-                    //}
-
-                    //DatabaseTree.Nodes[0].Nodes[oldDBname].Nodes.Clear();
-
-                    //DatabaseTree.CollapseAll();
-                    //DatabaseTree.Nodes[0].Nodes[dbName].ExpandAll();
-                    //DatabaseTree.SelectedNode = DatabaseTree.Nodes[0].Nodes[dbName];
-
-
-
-
-                    //trying new code heree
-
-
-                    db.ConnectDatabase(DatabaseTree.SelectedNode.Text.ToString());
+                    db.ConnectDatabase(filePathName);
                     if (DatabaseTree.SelectedNode.Nodes.Count == 0)
                     {
-                        DatabaseTree.SelectedNode.Nodes.Add("Tables", "Tables", "tablas.png", "tablas.png");
+                        DatabaseTree.SelectedNode.Nodes.Add("Tables", "Tables", "tables.png", "tables.png");
                         DatabaseTree.SelectedNode.Nodes["Tables"].ContextMenuStrip = TablesMenuStrip;
                         LoadTables();
                         DatabaseTree.SelectedNode.Nodes.Add("Views", "Views", "vistas.png", "vistas.png");
@@ -348,11 +290,6 @@ namespace SQLite_DataBaseManager
                 MessageBox.Show(ex.Message);
             }
             
-        }
-
-        private void DatabaseTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            DatabaseTree.SelectedNode = e.Node;
         }
 
         private void reToolStripMenuItem_Click(object sender, EventArgs e)
@@ -409,6 +346,19 @@ namespace SQLite_DataBaseManager
 
         private void DatabaseTree_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            DatabaseTree.SelectedNode = e.Node;
+            if (e.Node.Parent != null && e.Node.Parent.Text == "Databases")
+            {
+                foreach (var node in DatabaseTree.Nodes[0].Nodes)
+                {
+                    ((TreeNode)node).NodeFont = new Font(DatabaseTree.Font, FontStyle.Regular);
+                    if (((TreeNode)node).Text == e.Node.Text)
+                    {
+                        ((TreeNode)node).NodeFont = new Font(DatabaseTree.Font, FontStyle.Bold);   
+                    }
+                }
+                
+            }
             if (DatabaseTree.SelectedNode.Parent != null)
             {
                 if (DatabaseTree.SelectedNode.Parent.Text == "Databases")
@@ -438,8 +388,6 @@ namespace SQLite_DataBaseManager
 
         private void OpenFileAction_Click(object sender, EventArgs e)
         {
-            //this.openFileDialog1.ShowDialog();
-
             int size = -1;
             DialogResult result = openFileDialog1.ShowDialog(); // Show the dialog.
             if (result == DialogResult.OK) // Test result.
@@ -517,10 +465,11 @@ namespace SQLite_DataBaseManager
             CreateDatabaseAction_Click(sender, e);
         }
 
-        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        private void createConnectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
-
+            CreateConnectionForm createConnectionForm = new CreateConnectionForm();
+            createConnectionForm.ShowDialog();
+            this.refreshToolStripMenuItem_Click_1(sender, e);
         }
 
         private void refreshToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -546,10 +495,22 @@ namespace SQLite_DataBaseManager
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            this.dataGridView1.DataSource = null;
-            this.dataGridView1.DataSource = db.ExecuteWithResults(lastSelect);
+            try
+            {
+                this.dataGridView1.DataSource = null;
+                this.dataGridView1.DataSource = db.ExecuteWithResults(lastSelect);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not refresh. Make sure database is selected.");
+            }
+            
         }
-      
-        
+
+        private void removeConnectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var a = ((ToolStripItem)(sender)).Name;
+            MessageBox.Show("");
+        }
     }
 }
