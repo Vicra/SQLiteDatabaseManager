@@ -62,8 +62,9 @@ The create trigger module allows the developer to add triggers to the selected t
 Create views module allows you to create a view on the SQLite database, to create a view right click on the Views option and select the 'Create View' item.
 
 
-Icons Attributions
-Icons made by [Freepik](https://www.freepik.com/) from www.flaticon.com 
-Icons made by [Smash Icons](https://smashicons.com/) from www.flaticon.com 
-Icons made by [Pixel Buddha](https://www.flaticon.com/authors/pixel-buddha) from www.flaticon.com 
-Icons made by [Dave Gandy](https://fontawesome.com/?from=io) from www.flaticon.com 
+## Icons Attributions
+
+- Icons made by [Freepik](https://www.freepik.com/) from www.flaticon.com 
+- Icons made by [Smash Icons](https://smashicons.com/) from www.flaticon.com 
+- Icons made by [Pixel Buddha](https://www.flaticon.com/authors/pixel-buddha) from www.flaticon.com 
+- Icons made by [Dave Gandy](https://fontawesome.com/?from=io) from www.flaticon.com 
