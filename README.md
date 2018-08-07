@@ -28,7 +28,7 @@
 
 ![Create Connection Screenshot](https://github.com/Vicra/SQLiteDatabaseManager/blob/master/GithubImages/createConnection.PNG)
 
-Feature to add to you connections any existing SQLite batabase file you have. Currently only works with (.sqlite)
+Feature to add to your connections any existing SQLite database file you have. Currently only works with (.sqlite) extension files
 
 # Creating SQLite Database Files
 
