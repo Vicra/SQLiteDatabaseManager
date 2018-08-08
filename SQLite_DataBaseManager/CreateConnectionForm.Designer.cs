@@ -60,7 +60,7 @@
             // 
             this.btnSearchFile.Location = new System.Drawing.Point(53, 84);
             this.btnSearchFile.Name = "btnSearchFile";
-            this.btnSearchFile.Size = new System.Drawing.Size(75, 23);
+            this.btnSearchFile.Size = new System.Drawing.Size(48, 23);
             this.btnSearchFile.TabIndex = 2;
             this.btnSearchFile.Text = "...";
             this.btnSearchFile.UseVisualStyleBackColor = true;

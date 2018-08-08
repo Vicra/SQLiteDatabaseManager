@@ -1,32 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Data.SQLite;
 
 namespace SQLite_DataBaseManager
 {
     public partial class CreateViewForm : Form
     {
-        string sql = "";
-        SQLite db;
-        public CreateViewForm(SQLite database)
+        private SQLiteManager _sqliteManager;
+        private string sql = "";
+        public CreateViewForm(SQLiteManager manager)
         {
-            db = database;
+            _sqliteManager = manager;
             InitializeComponent();
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.GeneratedSQL.ReadOnly == false)
-                this.GeneratedSQL.ReadOnly = true;
-            else if (this.GeneratedSQL.ReadOnly )
-                this.GeneratedSQL.ReadOnly = false;
+            if (this.generatedDDLRichTextBox.ReadOnly == false)
+                this.generatedDDLRichTextBox.ReadOnly = true;
+            else if (this.generatedDDLRichTextBox.ReadOnly )
+                this.generatedDDLRichTextBox.ReadOnly = false;
         }
 
         private void cancelBtn_Click(object sender, EventArgs e)
@@ -36,14 +28,14 @@ namespace SQLite_DataBaseManager
 
         private void okBtn_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(textBox1.Text))
+            if (!String.IsNullOrEmpty(txtViewName.Text))
             {
-                GenerarDDL();
+                GenerateDDL();
                 try
                 {
-                    string sql = this.GeneratedSQL.Text;
-                    db.ExecuteNonQuery(sql);
-                    MessageBox.Show("View " + textBox1.Text+" created succesfully");
+                    string sql = this.generatedDDLRichTextBox.Text;
+                    _sqliteManager.ExecuteNonQuery(sql);
+                    MessageBox.Show("View " + txtViewName.Text+" created succesfully.");
                     this.Close();
                 }
                 catch (Exception ex)
@@ -53,35 +45,31 @@ namespace SQLite_DataBaseManager
             }
             else
             {
-                MessageBox.Show("User please,... add a view name");
+                MessageBox.Show("Missing view name field.");
             }
-            
-            
         }
         
 
         private void textBox1_Leave(object sender, EventArgs e)
         {
-
-            GenerarDDL();
+            GenerateDDL();
         }
 
         private void richTextBox1_Leave(object sender, EventArgs e)
         {
-            GenerarDDL();
+            GenerateDDL();
         }
-        private void GenerarDDL()
+        private void GenerateDDL()
         {
             sql = "CREATE VIEW ";
-            sql += this.textBox1.Text;
+            sql += this.txtViewName.Text;
             sql += " AS " + this.richTextBox1.Text;
-            this.GeneratedSQL.Text = sql;
+            this.generatedDDLRichTextBox.Text = sql;
         }
 
         private void tabPage1_Leave(object sender, EventArgs e)
         {
-            GenerarDDL();
+            GenerateDDL();
         }
-
     }
 }

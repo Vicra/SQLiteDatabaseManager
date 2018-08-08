@@ -1,16 +1,15 @@
 ﻿using System;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace SQLite_DataBaseManager
 {
     public partial class CreateDatabaseForm : Form
     {
-        SQLite db;
-        public CreateDatabaseForm(SQLite database)
+        SQLiteManager _sqliteManager;
+        public CreateDatabaseForm(SQLiteManager manager)
         {
-            db = database;
+            _sqliteManager = manager;
             InitializeComponent();
         }
 
@@ -23,7 +22,7 @@ namespace SQLite_DataBaseManager
             {
                 if (hasValidName(name) && hasValidPath(path))
                 {
-                    db.CreateDatabase(name, path, savePassword);
+                    _sqliteManager.CreateDatabase(name, path, savePassword);
                     MessageBox.Show("Database created successfully.");
                     this.Close();
                 }

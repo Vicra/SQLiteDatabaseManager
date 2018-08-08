@@ -5,11 +5,11 @@ using System.IO;
 
 namespace SQLite_DataBaseManager
 {
-    public class SQLite
+    public class SQLiteManager
     {
         public SQLiteConnection dbConnection { get; set; }
         public FileConnections fileConnections;
-        public SQLite()
+        public SQLiteManager()
         {
             fileConnections = new FileConnections();
         }

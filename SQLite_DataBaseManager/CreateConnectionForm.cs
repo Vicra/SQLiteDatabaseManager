@@ -1,13 +1,12 @@
 ﻿using System;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace SQLite_DataBaseManager
 {
     public partial class CreateConnectionForm : Form
     {
-        SQLite db = new SQLite();
+        SQLiteManager _sqliteManager = new SQLiteManager();
         public CreateConnectionForm()
         {
             InitializeComponent();
@@ -29,7 +28,7 @@ namespace SQLite_DataBaseManager
                 string filePathName = txtFilePathName.Text;
                 if (isValidPath(filePathName))
                 {
-                    db.createNewConnection(filePathName);
+                    _sqliteManager.createNewConnection(filePathName);
                     MessageBox.Show("Connection performed successfully.");
                     this.Close();
                 }

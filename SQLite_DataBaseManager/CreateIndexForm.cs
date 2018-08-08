@@ -1,101 +1,64 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SQLite_DataBaseManager
 {
     public partial class CreateIndexForm : Form
     {
-        string sql = "";
-        SQLite db;
-        public CreateIndexForm(SQLite database,string tableName)
+        private SQLiteManager _sqliteManager;
+        private string sql = "";
+        public CreateIndexForm(SQLiteManager manager, string tableName)
         {
-
             InitializeComponent(); 
-            this.TablesComboBox.Text = tableName;
-            db = database;
+            this.comboBoxTables.Text = tableName;
+            _sqliteManager = manager;
             AddColumnsToGrid();
         }
 
         private void AddColumnsToGrid()
         {
-            DataTable dt = new DataTable();
-            dt = db.ExecuteWithResults("pragma table_info(" + this.TablesComboBox.Text + ");");
-            TablesGrid.Rows.Add();
-            TablesGrid.Rows[0].Cells[1].Value = dt.Rows[0].ItemArray[1].ToString();
-            TablesGrid.Rows[0].Cells[2].Value = "BINARY";
-            TablesGrid.Rows[0].Cells[3].Value = "ASC";
-        }
-        
-
-        private void btnAceptar_Click(object sender, EventArgs e)
-        {
-            if (!String.IsNullOrEmpty(this.txtIndexName.Text))
-            {
-                GenerarDDL();
-                if (!ExisteIndex(this.txtIndexName.Text, TablesComboBox.Text))
-                {
-                    try
-                    {
-                        string sql = this.GeneratedSQL.Text;
-                        db.ExecuteNonQuery(sql);
-                        MessageBox.Show("Index " + this.txtIndexName.Text + " created successfully");
-                        this.Close();
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("el Index " + txtIndexName.Text + " ya existe");
-                }
-            }
-            else
-            {
-                MessageBox.Show("User please,... add an index name");
-            }
+            DataTable dataTable = new DataTable();
+            dataTable = _sqliteManager.ExecuteWithResults("pragma table_info(" + this.comboBoxTables.Text + ");");
+            dataGridViewTables.Rows.Add();
+            dataGridViewTables.Rows[0].Cells[1].Value = dataTable.Rows[0].ItemArray[1].ToString();
+            dataGridViewTables.Rows[0].Cells[2].Value = "BINARY";
+            dataGridViewTables.Rows[0].Cells[3].Value = "ASC";
         }
 
-        private bool ExisteIndex(string indexName,string tablename)
+        private bool IndexExists(string indexName, string tablename)
         {
-            DataTable dt = db.GetIndexes(tablename);
-            for (int i = 0; i < dt.Rows.Count; i++)
+            DataTable dataTable = _sqliteManager.GetIndexes(tablename);
+            for (int i = 0; i < dataTable.Rows.Count; i++)
             {
-                if (dt.Rows[i].ItemArray[0].ToString() == indexName)
+                if (dataTable.Rows[i].ItemArray[0].ToString() == indexName)
                     return true;
             }
             return false;
         }
 
-        private void GenerarDDL()
+        private void GenerateDDL()
         {
             try
             {
                 sql = "CREATE";
-                if (UniqueCheck.Checked)
+                if (checkBoxIsUnique.Checked)
                 {
                     sql += " UNIQUE ";
                 }
                 sql += " INDEX " + this.txtIndexName.Text;
-                sql += " ON " + TablesComboBox.Text + " (\n";
+                sql += " ON " + comboBoxTables.Text + " (\n";
 
-                if (!String.IsNullOrEmpty(TablesGrid.Rows[0].Cells[1].Value.ToString()))
+                if (!String.IsNullOrEmpty(dataGridViewTables.Rows[0].Cells[1].Value.ToString()))
                 {
-                    sql += "\t" + TablesGrid.Rows[0].Cells[1].Value.ToString() + " ";
+                    sql += "\t" + dataGridViewTables.Rows[0].Cells[1].Value.ToString() + " ";
                 }
                 
-                if (!String.IsNullOrEmpty(TablesGrid.Rows[0].Cells[2].Value.ToString()) && !String.IsNullOrEmpty(TablesGrid.Rows[0].Cells[3].Value.ToString()))
+                if (!String.IsNullOrEmpty(dataGridViewTables.Rows[0].Cells[2].Value.ToString()) && 
+                    !String.IsNullOrEmpty(dataGridViewTables.Rows[0].Cells[3].Value.ToString()))
                 {
-                    sql += "COLLATE " + TablesGrid.Rows[0].Cells[2].Value.ToString() + " ";
-                    sql += TablesGrid.Rows[0].Cells[3].Value.ToString() + "\n";
+                    sql += "COLLATE " + dataGridViewTables.Rows[0].Cells[2].Value.ToString() + " ";
+                    sql += dataGridViewTables.Rows[0].Cells[3].Value.ToString() + "\n";
                 }
                 
 
@@ -116,12 +79,12 @@ namespace SQLite_DataBaseManager
 
         private void tabControl1_Leave(object sender, EventArgs e)
         {
-            GenerarDDL();
+            GenerateDDL();
         }
 
         private void tabPage1_Leave(object sender, EventArgs e)
         {
-            GenerarDDL();
+            GenerateDDL();
         }
 
         private void PartialCheck_CheckedChanged(object sender, EventArgs e)
@@ -132,15 +95,34 @@ namespace SQLite_DataBaseManager
                 this.richTextBox2.Enabled = false;
         }
 
-        private void TablesGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void btnConfirm_Click(object sender, EventArgs e)
         {
-            
-        }
-
-        private void TablesGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-            
+            if (!String.IsNullOrEmpty(this.txtIndexName.Text))
+            {
+                GenerateDDL();
+                if (!IndexExists(this.txtIndexName.Text, comboBoxTables.Text))
+                {
+                    try
+                    {
+                        string sql = this.GeneratedSQL.Text;
+                        _sqliteManager.ExecuteNonQuery(sql);
+                        MessageBox.Show("Index " + this.txtIndexName.Text + " created successfully.");
+                        this.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Index " + txtIndexName.Text + " already exists.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Missing index name.");
+            }
         }
     }
 }

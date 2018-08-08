@@ -175,6 +175,7 @@
             this.DatabaseTree.SelectedImageIndex = 0;
             this.DatabaseTree.Size = new System.Drawing.Size(168, 462);
             this.DatabaseTree.TabIndex = 0;
+            this.DatabaseTree.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.DatabaseTree_NodeMouseClick);
             this.DatabaseTree.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.DatabaseTree_NodeMouseDoubleClick);
             // 
             // imageList1

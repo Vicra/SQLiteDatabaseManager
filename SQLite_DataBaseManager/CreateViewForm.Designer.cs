@@ -32,14 +32,14 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtViewName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.GeneratedSQL = new System.Windows.Forms.RichTextBox();
+            this.generatedDDLRichTextBox = new System.Windows.Forms.RichTextBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.cancelBtn = new System.Windows.Forms.Button();
-            this.okBtn = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnConfirm = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -55,21 +55,23 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(376, 226);
+            this.tabControl1.Size = new System.Drawing.Size(282, 183);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.richTextBox1);
             this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.textBox1);
+            this.tabPage1.Controls.Add(this.txtViewName);
             this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(368, 197);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Size = new System.Drawing.Size(274, 157);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Properties";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -77,9 +79,10 @@
             // 
             // richTextBox1
             // 
-            this.richTextBox1.Location = new System.Drawing.Point(32, 72);
+            this.richTextBox1.Location = new System.Drawing.Point(24, 58);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(316, 102);
+            this.richTextBox1.Size = new System.Drawing.Size(238, 84);
             this.richTextBox1.TabIndex = 3;
             this.richTextBox1.Text = "";
             this.richTextBox1.Leave += new System.EventHandler(this.richTextBox1_Leave);
@@ -87,36 +90,40 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(29, 51);
+            this.label2.Location = new System.Drawing.Point(22, 41);
+            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 17);
+            this.label2.Size = new System.Drawing.Size(51, 13);
             this.label2.TabIndex = 2;
             this.label2.Text = "Definition";
             // 
-            // textBox1
+            // txtViewName
             // 
-            this.textBox1.Location = new System.Drawing.Point(106, 24);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(242, 22);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
+            this.txtViewName.Location = new System.Drawing.Point(80, 20);
+            this.txtViewName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtViewName.Name = "txtViewName";
+            this.txtViewName.Size = new System.Drawing.Size(182, 20);
+            this.txtViewName.TabIndex = 1;
+            this.txtViewName.Leave += new System.EventHandler(this.textBox1_Leave);
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(26, 24);
+            this.label1.Location = new System.Drawing.Point(20, 20);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 23);
+            this.label1.Size = new System.Drawing.Size(75, 19);
             this.label1.TabIndex = 0;
             this.label1.Text = "View Name";
             // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.checkBox1);
-            this.tabPage2.Controls.Add(this.GeneratedSQL);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Controls.Add(this.generatedDDLRichTextBox);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(368, 197);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage2.Size = new System.Drawing.Size(274, 157);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "DDL";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -124,26 +131,29 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(8, 6);
+            this.checkBox1.Location = new System.Drawing.Point(6, 5);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(94, 21);
+            this.checkBox1.Size = new System.Drawing.Size(74, 17);
             this.checkBox1.TabIndex = 1;
             this.checkBox1.Text = "Read only";
             this.checkBox1.UseVisualStyleBackColor = true;
             this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
-            // GeneratedSQL
+            // generatedDDLRichTextBox
             // 
-            this.GeneratedSQL.Location = new System.Drawing.Point(8, 33);
-            this.GeneratedSQL.Name = "GeneratedSQL";
-            this.GeneratedSQL.Size = new System.Drawing.Size(352, 158);
-            this.GeneratedSQL.TabIndex = 0;
-            this.GeneratedSQL.Text = "";
+            this.generatedDDLRichTextBox.Location = new System.Drawing.Point(6, 27);
+            this.generatedDDLRichTextBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.generatedDDLRichTextBox.Name = "generatedDDLRichTextBox";
+            this.generatedDDLRichTextBox.Size = new System.Drawing.Size(265, 129);
+            this.generatedDDLRichTextBox.TabIndex = 0;
+            this.generatedDDLRichTextBox.Text = "";
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -153,38 +163,42 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.cancelBtn);
-            this.splitContainer1.Panel2.Controls.Add(this.okBtn);
-            this.splitContainer1.Size = new System.Drawing.Size(376, 297);
-            this.splitContainer1.SplitterDistance = 226;
+            this.splitContainer1.Panel2.Controls.Add(this.btnCancel);
+            this.splitContainer1.Panel2.Controls.Add(this.btnConfirm);
+            this.splitContainer1.Size = new System.Drawing.Size(282, 241);
+            this.splitContainer1.SplitterDistance = 183;
+            this.splitContainer1.SplitterWidth = 3;
             this.splitContainer1.TabIndex = 1;
             // 
-            // cancelBtn
+            // btnCancel
             // 
-            this.cancelBtn.Location = new System.Drawing.Point(284, 12);
-            this.cancelBtn.Name = "cancelBtn";
-            this.cancelBtn.Size = new System.Drawing.Size(80, 41);
-            this.cancelBtn.TabIndex = 1;
-            this.cancelBtn.Text = "cancel";
-            this.cancelBtn.UseVisualStyleBackColor = true;
-            this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
+            this.btnCancel.Location = new System.Drawing.Point(213, 10);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(60, 33);
+            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
-            // okBtn
+            // btnConfirm
             // 
-            this.okBtn.Location = new System.Drawing.Point(184, 12);
-            this.okBtn.Name = "okBtn";
-            this.okBtn.Size = new System.Drawing.Size(80, 41);
-            this.okBtn.TabIndex = 0;
-            this.okBtn.Text = "ok";
-            this.okBtn.UseVisualStyleBackColor = true;
-            this.okBtn.Click += new System.EventHandler(this.okBtn_Click);
+            this.btnConfirm.Location = new System.Drawing.Point(138, 10);
+            this.btnConfirm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnConfirm.Name = "btnConfirm";
+            this.btnConfirm.Size = new System.Drawing.Size(60, 33);
+            this.btnConfirm.TabIndex = 0;
+            this.btnConfirm.Text = "Confirm";
+            this.btnConfirm.UseVisualStyleBackColor = true;
+            this.btnConfirm.Click += new System.EventHandler(this.okBtn_Click);
             // 
             // CreateViewForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(376, 297);
+            this.ClientSize = new System.Drawing.Size(282, 241);
             this.Controls.Add(this.splitContainer1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "CreateViewForm";
             this.Text = "Create View";
             this.tabControl1.ResumeLayout(false);
@@ -208,11 +222,11 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtViewName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.RichTextBox GeneratedSQL;
-        private System.Windows.Forms.Button cancelBtn;
-        private System.Windows.Forms.Button okBtn;
+        private System.Windows.Forms.RichTextBox generatedDDLRichTextBox;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnConfirm;
     }
 }

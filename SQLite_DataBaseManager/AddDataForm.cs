@@ -1,35 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SQLite_DataBaseManager
 {
     public partial class AddDataForm : Form
     {
-        string name;
-        SQLite db;
-        string sql;
-        public AddDataForm(string tableName,SQLite database)
+        private SQLiteManager _sqliteManager;
+        private string _tableName;
+        private string _sql;
+        public AddDataForm(string tableName,SQLiteManager manager)
         {
-            db = database;
-            name = tableName;
+            _sqliteManager = manager;
+            _tableName = tableName;
             InitializeComponent();
             InitializeDataGrid();
         }
 
         private void InitializeDataGrid()
         {
-            DataTable dt = new DataTable();
-            dt = db.ExecuteWithResults("pragma table_info(" + name + ");");
-            for (int i = 0; i < dt.Rows.Count; i++)
+            DataTable dataTable = new DataTable();
+            dataTable = _sqliteManager.ExecuteWithResults("pragma table_info(" + _tableName + ");");
+            for (int i = 0; i < dataTable.Rows.Count; i++)
             {
-                this.dataGridView1.Columns.Add(dt.Rows[i].ItemArray[1].ToString(), dt.Rows[i].ItemArray[1].ToString());
+                this.dataGridView1.Columns.Add(
+                    dataTable.Rows[i].ItemArray[1].ToString(), 
+                    dataTable.Rows[i].ItemArray[1].ToString());
             }
 
         }
@@ -51,27 +47,26 @@ namespace SQLite_DataBaseManager
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            int rowsInserted = GenerarDDL();
+            int rowsInserted = GenerateDDL();
             try
             {
-                db.ExecuteWithResults(sql);
+                _sqliteManager.ExecuteWithResults(_sql);
                 MessageBox.Show(rowsInserted+" Row(s) Inserted");
                 this.Close();
             }
             catch(Exception ex){
                 MessageBox.Show(ex.Message);
             }
-            
         }
 
-        private int GenerarDDL()
+        private int GenerateDDL()
         {
             string rowSQL = "";
             int n = this.dataGridView1.Columns.Count;
             int m = this.dataGridView1.Rows.Count;
             for (int j = 0; j < m; j++)
             {
-                rowSQL += "INSERT INTO " + this.name + " values(";
+                rowSQL += "INSERT INTO " + this._tableName + " values(";
                 for (int i = 0; i < n; i++)
                 {
                     rowSQL += dataGridView1.Rows[j].Cells[i].Value;
@@ -82,7 +77,7 @@ namespace SQLite_DataBaseManager
                 }
                 rowSQL += ");\n";
             }
-            sql = rowSQL;
+            _sql = rowSQL;
             return m;
         }
     }

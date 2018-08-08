@@ -48,3 +48,8 @@ C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj
 C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.csproj.CopyComplete
 C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.exe
 C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.pdb
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\bin\Debug\SQLite_DataBaseManager.exe.manifest
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\bin\Debug\SQLite_DataBaseManager.application
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.exe.manifest
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.application
+C:\Users\vicra\Documents\GitHub\SQLiteDatabaseManager\SQLite_DataBaseManager\obj\Debug\SQLite_DataBaseManager.TrustInfo.xml

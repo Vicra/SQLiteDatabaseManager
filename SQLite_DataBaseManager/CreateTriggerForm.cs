@@ -1,24 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SQLite_DataBaseManager
 {
     public partial class CreateTriggerForm : Form
     {
-        SQLite db;
-        string sql="";
-        public CreateTriggerForm(SQLite database,string table_name)
+        private SQLiteManager _sqliteManager;
+        private string sql = "";
+        public CreateTriggerForm(SQLiteManager manager, string table_name)
         {
-            db = database;
+            _sqliteManager = manager;
             InitializeComponent();
-            this.OnTableComboBox.Text = table_name;
+            this.comboBoxOnTable.Text = table_name;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -26,23 +20,18 @@ namespace SQLite_DataBaseManager
             this.Close();
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            if (!String.IsNullOrEmpty(this.txtName.Text) || !String.IsNullOrEmpty(this.ActionComboBox.Text) || !String.IsNullOrEmpty(this.CodeTextBox.Text))
+            if (!String.IsNullOrEmpty(this.txtName.Text) || !String.IsNullOrEmpty(this.comboBoxAction.Text) || !String.IsNullOrEmpty(this.txtCode.Text))
             {
-                GenerarDDL();
-                if (!ExisteTrigger(this.OnTableComboBox.Text,this.txtName.Text))
+                GenerateDDL();
+                if (!TriggerExists(this.comboBoxOnTable.Text,this.txtName.Text))
                 {
                     try
                     {
-                        string sql = this.richTextBox2.Text;
-                        db.ExecuteNonQuery(sql);
-                        MessageBox.Show("trigger " + this.txtName.Text + " created successfully!");
+                        string sql = this.generatedDDLRichTextBox.Text;
+                        _sqliteManager.ExecuteNonQuery(sql);
+                        MessageBox.Show("Trigger " + this.txtName.Text + " created successfully!");
                         this.Close();
                     }
                     catch (Exception ex)
@@ -52,35 +41,35 @@ namespace SQLite_DataBaseManager
                 }
                 else
                 {
-                    MessageBox.Show("La trigger " + txtName.Text + " ya existe");
+                    MessageBox.Show("Trigger " + txtName.Text + " already exists.");
                 }
             }
             else
             {
-                MessageBox.Show("missing fields");
+                MessageBox.Show("Missing input fields.");
             }
         }
 
-        private bool ExisteTrigger(string tableName, string trigger)
+        private bool TriggerExists(string tableName, string triggerName)
         {
-            DataTable dt = db.GetTriggers(tableName);
-            for (int i = 0; i < dt.Rows.Count; i++)
+            DataTable dataTable = _sqliteManager.GetTriggers(tableName);
+            for (int i = 0; i < dataTable.Rows.Count; i++)
             {
-                if (dt.Rows[i].ItemArray[0].ToString() == trigger)
+                if (dataTable.Rows[i].ItemArray[0].ToString() == triggerName)
                     return true;
             }
             return false;
         }
 
-        private void GenerarDDL()
+        private void GenerateDDL()
         {
             sql = "";
             string name = this.txtName.Text;
-            string when = this.WhenComboBox.Text;
-            string action = this.ActionComboBox.Text;
-            string table = this.OnTableComboBox.Text;
-            string scope = this.ScopeComboBox.Text;
-            string code = this.CodeTextBox.Text;
+            string when = this.comboBoxWhen.Text;
+            string action = this.comboBoxAction.Text;
+            string table = this.comboBoxOnTable.Text;
+            string scope = this.comboBoxScope.Text;
+            string code = this.txtCode.Text;
 
             sql += "CREATE TRIGGER "+name+"\n";
             sql += "\t"+when+" ";
@@ -92,18 +81,18 @@ namespace SQLite_DataBaseManager
             sql += "\t"+code;
             sql += "\nEND;";
 
-            this.richTextBox2.Text = sql;
+            this.generatedDDLRichTextBox.Text = sql;
 
         }
 
         private void tabControl1_Leave(object sender, EventArgs e)
         {
-            GenerarDDL();
+            GenerateDDL();
         }
 
         private void tabPage1_Leave(object sender, EventArgs e)
         {
-            GenerarDDL();
+            GenerateDDL();
         }
     }
 }

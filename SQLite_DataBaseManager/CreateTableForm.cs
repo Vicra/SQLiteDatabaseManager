@@ -1,64 +1,90 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SQLite_DataBaseManager
 {
     public partial class CreateTableForm : Form
     {
-        string sql = "";
-        SQLite db;
-        public CreateTableForm(SQLite database)
+        private SQLiteManager _sqliteManager;
+        private string sql = "";
+        public CreateTableForm(SQLiteManager manager)
         {
-            db = database;
+            _sqliteManager = manager;
             InitializeComponent();
-        }
-
-        private void CreateTableForm_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (this.GeneratedSQL.ReadOnly == false)
-                this.GeneratedSQL.ReadOnly = true;
-            else if (this.GeneratedSQL.ReadOnly)
-                this.GeneratedSQL.ReadOnly = false;
+            if (this.generatedSQLRichTextBox.ReadOnly == false)
+                this.generatedSQLRichTextBox.ReadOnly = true;
+            else if (this.generatedSQLRichTextBox.ReadOnly)
+                this.generatedSQLRichTextBox.ReadOnly = false;
         }
 
-        private void btnCancelar_Click(object sender, EventArgs e)
+        private bool TableExists(string tableName)
         {
-            this.Close();
+            DataTable dt = _sqliteManager.GetTables();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                if (dt.Rows[i].ItemArray[0].ToString() == tableName)
+                    return true;
+            }
+            return false;
         }
 
-        private void AgregarColumnaStripBtn_Click(object sender, EventArgs e)
+        private void tabPage1_Leave(object sender, EventArgs e)
         {
-            ColumnasGrid.Rows.Add();
+            GenerateDDL();
         }
 
-        private void EliminarColumnaStripBtn_Click(object sender, EventArgs e)
+        private void GenerateDDL()
         {
-            ColumnasGrid.Rows.Remove(ColumnasGrid.Rows[ColumnasGrid.SelectedCells[0].RowIndex]);
+            sql = "CREATE TABLE " + this.txtTableName.Text + " (";
+            int n = this.ColumnsGrid.Rows.Count;
+            var row = ColumnsGrid.Rows;
+            for (int i = 0; i < n; i++)
+            {
+                var pk = row[i].Cells[0].Value;
+                var nombreColumna = row[i].Cells[1].Value;
+                var tipo_de_dato = row[i].Cells[2].Value;
+                var tamano = row[i].Cells[3].Value;
+                var noNulo = row[i].Cells[4].Value;
+
+                sql += "\n    " + nombreColumna + " ";
+                sql += tipo_de_dato + " ";
+                if (tamano != null)
+                {
+                    sql += "(" + tamano + ") ";
+                }
+                if (noNulo != null)
+                {
+                    sql += "NOT NULL ";
+                }
+                if (pk != null && (bool)pk == true)
+                {
+                    sql += "PRIMARY KEY";
+                }
+                if (i != n - 1)
+                {
+                    sql += ", ";
+                }
+            }
+            sql += "\n );";
+            this.generatedSQLRichTextBox.Text = sql;
         }
 
-        private void btnAceptar_Click(object sender, EventArgs e)
+        private void btnConfirm_Click(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(this.txtTableName.Text))
             {
-                GenerarDDL();
-                if (!ExisteTabla(this.txtTableName.Text))
+                GenerateDDL();
+                if (!TableExists(this.txtTableName.Text))
                 {
                     try
                     {
-                        string sql = this.GeneratedSQL.Text;
-                        db.ExecuteNonQuery(sql);
+                        string sql = this.generatedSQLRichTextBox.Text;
+                        _sqliteManager.ExecuteNonQuery(sql);
                         MessageBox.Show("Table " + this.txtTableName.Text + " created successfully!");
                         this.Close();
                     }
@@ -71,7 +97,7 @@ namespace SQLite_DataBaseManager
                             errorMessage += ex.InnerException.Message;
                         }
                         MessageBox.Show(errorMessage);
-                    }   
+                    }
                 }
                 else
                 {
@@ -80,64 +106,23 @@ namespace SQLite_DataBaseManager
             }
             else
             {
-                MessageBox.Show("Add a table name");
+                MessageBox.Show("Missing input table name.");
             }
         }
 
-        private bool ExisteTabla(string nombreTabla)
+        private void btnCancel_Click(object sender, EventArgs e)
         {
-            DataTable dt = db.GetTables();
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                if (dt.Rows[i].ItemArray[0].ToString() == nombreTabla)
-                    return true;
-            }
-            return false;
+            this.Close();
         }
 
-        private void tabPage1_Leave(object sender, EventArgs e)
+        private void addColumnToolStripButton_Click(object sender, EventArgs e)
         {
-            GenerarDDL();
+            ColumnsGrid.Rows.Add();
         }
 
-        private void GenerarDDL()
+        private void deleteColumnToolStripBtn_Click(object sender, EventArgs e)
         {
-                sql = "CREATE TABLE " + this.txtTableName.Text + " (";
-                int n = this.ColumnasGrid.Rows.Count;
-                var row = ColumnasGrid.Rows;
-                for (int i = 0; i < n; i++)
-                {
-                    var pk = row[i].Cells[0].Value;
-                    var nombreColumna = row[i].Cells[1].Value;
-                    var tipo_de_dato = row[i].Cells[2].Value;
-                    var tamano = row[i].Cells[3].Value;
-                    var noNulo = row[i].Cells[4].Value;
-
-                    sql += "\n    " + nombreColumna + " ";
-                    sql += tipo_de_dato + " ";
-                    if (tamano != null)
-                    {
-                        sql += "(" + tamano + ") ";
-                    }
-                    if (noNulo != null)
-                    {
-                        sql += "NOT NULL ";
-                    }
-                    if (pk != null && (bool)pk == true)
-                    {
-                        sql += "PRIMARY KEY";
-                    }
-                    if (i != n - 1)
-                    {
-                        sql += ", ";
-                    }
-                }
-                sql += "\n );";
-                this.GeneratedSQL.Text = sql;
-            
-                
-            
-            
+            ColumnsGrid.Rows.Remove(ColumnsGrid.Rows[ColumnsGrid.SelectedCells[0].RowIndex]);
         }
     }
 }

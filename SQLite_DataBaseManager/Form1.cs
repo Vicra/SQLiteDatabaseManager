@@ -9,7 +9,7 @@ namespace SQLite_DataBaseManager
     public partial class Form1 : Form
     {
         string lastSelect = "";
-        SQLite db = new SQLite();
+        SQLiteManager _sqliteManager = new SQLiteManager();
         CreateViewForm viewForm;
         CreateDatabaseForm createForm;
         CreateTableForm createTableForm;
@@ -48,7 +48,7 @@ namespace SQLite_DataBaseManager
 
         private void LoadTables()
         {
-            DataTable dt = db.GetTables();
+            DataTable dt = _sqliteManager.GetTables();
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes.Add(
@@ -65,7 +65,6 @@ namespace SQLite_DataBaseManager
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes.Add("Triggers", "Triggers", "tools.png", "tools.png");
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Nodes["Triggers"].ContextMenuStrip = TriggersMenuStrip;
 
-
                 string tableName = DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[i].Text; 
                 LoadColumns(tableName);
                 LoadIndexes(dt.Rows[i].ItemArray[0].ToString());
@@ -76,7 +75,7 @@ namespace SQLite_DataBaseManager
 
         private void LoadTriggers(string table)
         {
-            DataTable dt = db.GetTriggers(table);
+            DataTable dt = _sqliteManager.GetTriggers(table);
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[table].Nodes["Triggers"].Nodes.Add(dt.Rows[i].ItemArray[0].ToString(),
@@ -87,7 +86,7 @@ namespace SQLite_DataBaseManager
 
         private void LoadIndexes(string table)
         {
-            DataTable dt = db.GetIndexes(table);
+            DataTable dt = _sqliteManager.GetIndexes(table);
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[table].Nodes["Indexes"].Nodes.Add(dt.Rows[i].ItemArray[0].ToString(),
@@ -98,7 +97,7 @@ namespace SQLite_DataBaseManager
 
         private void LoadColumns(string table)
         {
-            DataTable dt = db.GetTableColumns(table);
+            DataTable dt = _sqliteManager.GetTableColumns(table);
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DatabaseTree.SelectedNode.Nodes["Tables"].Nodes[table].Nodes["Columns"].Nodes.Add(dt.Rows[i].ItemArray[1].ToString(),
@@ -107,19 +106,18 @@ namespace SQLite_DataBaseManager
         }
         private void LoadViews()
         {
-            DataTable dt = db.GetViews();
+            DataTable dt = _sqliteManager.GetViews();
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 DatabaseTree.SelectedNode.Nodes["Views"].Nodes.Add(dt.Rows[i].ItemArray[0].ToString(), dt.Rows[i].ItemArray[0].ToString(),
                     "vista.png", "vista.png");
                 DatabaseTree.SelectedNode.Nodes["Views"].Nodes[i].ContextMenuStrip = ViewMenuStrip;
             }
-
         }
 
         private void CreateDatabaseAction_Click(object sender, EventArgs e)
         {
-            createForm = new CreateDatabaseForm(db);
+            createForm = new CreateDatabaseForm(_sqliteManager);
             createForm.ShowDialog();
             this.refreshToolStripMenuItem_Click_1(sender,e);
         }
@@ -136,21 +134,21 @@ namespace SQLite_DataBaseManager
             MessageBoxButtons.YesNo, MessageBoxIcon.Question,
             MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             {
-                db.DeleteDatabase(DatabaseTree.SelectedNode.Text.ToString());
+                _sqliteManager.DeleteDatabase(DatabaseTree.SelectedNode.Text.ToString());
                 RefreshDatabasesAction_Click(sender, e);
             }
         }
 
         private void CreateView_Click(object sender, EventArgs e)
         {
-            viewForm = new CreateViewForm(db);
+            viewForm = new CreateViewForm(_sqliteManager);
             viewForm.ShowDialog();
             this.refreshToolStripMenuItem_Click_1(sender, e);
         }
 
         private void createToolStripMenuItem3_Click(object sender, EventArgs e)
         {
-            viewForm = new CreateViewForm(db);
+            viewForm = new CreateViewForm(_sqliteManager);
             viewForm.ShowDialog();
             this.refreshToolStripMenuItem_Click_1(sender, e);
         }
@@ -158,7 +156,7 @@ namespace SQLite_DataBaseManager
 
         private void createToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            createTableForm = new CreateTableForm(db);
+            createTableForm = new CreateTableForm(_sqliteManager);
             createTableForm.ShowDialog();
             this.refreshToolStripMenuItem_Click_1(sender, e);
         }
@@ -184,7 +182,7 @@ namespace SQLite_DataBaseManager
                 {
                     DataTable dt = new DataTable();
 
-                    this.dataGridView1.DataSource = db.ExecuteWithResults(sql);
+                    this.dataGridView1.DataSource = _sqliteManager.ExecuteWithResults(sql);
                     tabControl1.SelectedIndex = 0;
                     string message= "sql Excecuted successfully";
                     AppendText(message, Color.Blue);
@@ -236,7 +234,7 @@ namespace SQLite_DataBaseManager
                     string path = nameElements[1].Replace(")","");
                     string filePathName = path + "\\" + name;
 
-                    db.ConnectDatabase(filePathName);
+                    _sqliteManager.ConnectDatabase(filePathName);
                     if (DatabaseTree.SelectedNode.Nodes.Count == 0)
                     {
                         DatabaseTree.SelectedNode.Nodes.Add("Tables", "Tables", "tables.png", "tables.png");
@@ -259,7 +257,7 @@ namespace SQLite_DataBaseManager
         private void DisconnectDatabase_Click(object sender, EventArgs e)
         {
 
-            db.CloseConnection();
+            _sqliteManager.CloseConnection();
             InitializeDatabases();
             DatabaseTree.Nodes[0].Expand();
         }
@@ -282,7 +280,7 @@ namespace SQLite_DataBaseManager
                 dataGridView1.Refresh();
                 string tableName = "";
                 tableName += DatabaseTree.SelectedNode.Text;
-                this.dataGridView1.DataSource = db.ExecuteWithResults("SELECT * FROM " + tableName);
+                this.dataGridView1.DataSource = _sqliteManager.ExecuteWithResults("SELECT * FROM " + tableName);
                 tabControl1.SelectedIndex = 0;
             }
             catch (Exception ex)
@@ -298,27 +296,27 @@ namespace SQLite_DataBaseManager
             MessageBoxButtons.YesNo, MessageBoxIcon.Question,
             MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             {
-                db.ExecuteWithResults("DROP TABLE " + DatabaseTree.SelectedNode.Text.ToString());
+                _sqliteManager.ExecuteWithResults("DROP TABLE " + DatabaseTree.SelectedNode.Text.ToString());
                 RefreshDatabasesAction_Click(sender, e);
             }
         }
         private void insertDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AddDataForm dataform = new AddDataForm(DatabaseTree.SelectedNode.Text, db);
+            AddDataForm dataform = new AddDataForm(DatabaseTree.SelectedNode.Text, _sqliteManager);
             dataform.Show();
         }
 
         private void createIndexToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
-            indexform = new CreateIndexForm(db, this.DatabaseTree.SelectedNode.Parent.Text);
+            indexform = new CreateIndexForm(_sqliteManager, this.DatabaseTree.SelectedNode.Parent.Text);
             indexform.ShowDialog();
 
         }
 
         private void createTriggerToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            triggerForm = new CreateTriggerForm(db,DatabaseTree.SelectedNode.Parent.Text);
+            triggerForm = new CreateTriggerForm(_sqliteManager,DatabaseTree.SelectedNode.Parent.Text);
             triggerForm.ShowDialog();
         }
 
@@ -328,7 +326,7 @@ namespace SQLite_DataBaseManager
             MessageBoxButtons.YesNo, MessageBoxIcon.Question,
             MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             {
-                db.ExecuteWithResults("DROP INDEX " + DatabaseTree.SelectedNode.Text.ToString());
+                _sqliteManager.ExecuteWithResults("DROP INDEX " + DatabaseTree.SelectedNode.Text.ToString());
                 RefreshDatabasesAction_Click(sender, e);
             }
         }
@@ -339,7 +337,7 @@ namespace SQLite_DataBaseManager
             MessageBoxButtons.YesNo, MessageBoxIcon.Question,
             MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             {
-                db.ExecuteWithResults("DROP VIEW " + DatabaseTree.SelectedNode.Text.ToString());
+                _sqliteManager.ExecuteWithResults("DROP VIEW " + DatabaseTree.SelectedNode.Text.ToString());
                 RefreshDatabasesAction_Click(sender, e);
             }
         }
@@ -367,23 +365,22 @@ namespace SQLite_DataBaseManager
                 }
                 else if (DatabaseTree.SelectedNode.Parent.Text == "Tables")
                 {
-                    this.DDL_TextBox.Text = db.GetDDL(DatabaseTree.SelectedNode.Text, "table");
+                    this.DDL_TextBox.Text = _sqliteManager.GetDDL(DatabaseTree.SelectedNode.Text, "table");
                 }
                 else if (DatabaseTree.SelectedNode.Parent.Text == "Views")
                 {
-                    this.DDL_TextBox.Text = db.GetDDL(DatabaseTree.SelectedNode.Text, "view");
+                    this.DDL_TextBox.Text = _sqliteManager.GetDDL(DatabaseTree.SelectedNode.Text, "view");
                 }
                 else if (DatabaseTree.SelectedNode.Parent.Text == "Indexes")
                 {
-                    this.DDL_TextBox.Text = db.GetDDL(DatabaseTree.SelectedNode.Text, "index");
+                    this.DDL_TextBox.Text = _sqliteManager.GetDDL(DatabaseTree.SelectedNode.Text, "index");
                 }
                 else if (DatabaseTree.SelectedNode.Parent.Text == "Triggers")
                 {
-                    this.DDL_TextBox.Text = db.GetDDL(DatabaseTree.SelectedNode.Text, "trigger");
+                    this.DDL_TextBox.Text = _sqliteManager.GetDDL(DatabaseTree.SelectedNode.Text, "trigger");
                 }
                 tabControl1.SelectedIndex = 1;
             }
-            
         }
 
         private void OpenFileAction_Click(object sender, EventArgs e)
@@ -456,8 +453,6 @@ namespace SQLite_DataBaseManager
                 
             }
             this.QueryTextBox.Font = new Font(QueryTextBox.Font, FontStyle.Bold);
-
-            
         }
 
         private void createADatabaseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -488,7 +483,7 @@ namespace SQLite_DataBaseManager
             MessageBoxButtons.YesNo, MessageBoxIcon.Question,
             MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
             {
-                db.ExecuteWithResults("DROP TRIGGER " + DatabaseTree.SelectedNode.Text.ToString());
+                _sqliteManager.ExecuteWithResults("DROP TRIGGER " + DatabaseTree.SelectedNode.Text.ToString());
                 RefreshDatabasesAction_Click(sender, e);
             }
         }
@@ -498,19 +493,42 @@ namespace SQLite_DataBaseManager
             try
             {
                 this.dataGridView1.DataSource = null;
-                this.dataGridView1.DataSource = db.ExecuteWithResults(lastSelect);
+                this.dataGridView1.DataSource = _sqliteManager.ExecuteWithResults(lastSelect);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Could not refresh. Make sure database is selected.");
             }
-            
         }
 
         private void removeConnectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var a = ((ToolStripItem)(sender)).Name;
             MessageBox.Show("");
+        }
+
+        private void DatabaseTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (DatabaseTree.SelectedNode.Parent != null)
+            {
+                if (DatabaseTree.SelectedNode.Parent.Text == "Tables")
+                {
+                    this.DDL_TextBox.Text = _sqliteManager.GetDDL(DatabaseTree.SelectedNode.Text, "table");
+                }
+                else if (DatabaseTree.SelectedNode.Parent.Text == "Views")
+                {
+                    this.DDL_TextBox.Text = _sqliteManager.GetDDL(DatabaseTree.SelectedNode.Text, "view");
+                }
+                else if (DatabaseTree.SelectedNode.Parent.Text == "Indexes")
+                {
+                    this.DDL_TextBox.Text = _sqliteManager.GetDDL(DatabaseTree.SelectedNode.Text, "index");
+                }
+                else if (DatabaseTree.SelectedNode.Parent.Text == "Triggers")
+                {
+                    this.DDL_TextBox.Text = _sqliteManager.GetDDL(DatabaseTree.SelectedNode.Text, "trigger");
+                }
+                tabControl1.SelectedIndex = 1;
+            }
         }
     }
 }
